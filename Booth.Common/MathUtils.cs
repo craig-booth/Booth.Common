@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace PortfolioManager.Common
+namespace Booth.Common
 {
     public enum RoundingRule {Round, Truncate}
 
@@ -53,7 +53,6 @@ namespace PortfolioManager.Common
 
         public static void ApportionAmount(decimal amount, ApportionedCurrencyValue[] values)
         {
-            /* Calculate total */
             decimal totalUnits = values.Sum(x => x.Units);
 
             decimal totalAmount = amount.ToCurrency(RoundingRule.Truncate);
@@ -71,7 +70,6 @@ namespace PortfolioManager.Common
 
         public static void ApportionAmount(int amount, ApportionedIntegerValue[] values)
         {
-            /* Calculate total */
             int totalUnits = values.Sum(x => x.Units);
 
             int totalAmount = amount;
@@ -89,9 +87,7 @@ namespace PortfolioManager.Common
 
         public static int ParseInt(string value)
         {
-            int result;
-
-            if (int.TryParse(value, out result))
+            if (int.TryParse(value, out int result))
                 return result;
             else
                 return 0;
@@ -99,9 +95,7 @@ namespace PortfolioManager.Common
 
         public static int ParseInt(string value, int defaultValue)
         {
-            int result;
-
-            if (int.TryParse(value, out result))
+            if (int.TryParse(value, out int result))
                 return result;
             else
                 return defaultValue;
@@ -109,9 +103,7 @@ namespace PortfolioManager.Common
 
         public static decimal ParseDecimal(string value)
         {
-            decimal result;
-
-            if (decimal.TryParse(value, out result))
+            if (decimal.TryParse(value, out decimal result))
                 return result;
             else
                 return 0.0m;
@@ -119,9 +111,7 @@ namespace PortfolioManager.Common
 
         public static decimal ParseDecimal(string value, decimal defaultValue)
         {
-            decimal result;
-
-            if (decimal.TryParse(value, out result))
+            if (decimal.TryParse(value, out decimal result))
                 return result;
             else
                 return defaultValue;

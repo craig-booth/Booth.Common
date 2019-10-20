@@ -38,7 +38,7 @@ namespace Booth.Common
 
         public override string ToString()
         {
-            return String.Format("{0} - {1}", FromDate, ToDate);
+            return String.Format("{0:d} - {1:d}", FromDate, ToDate);
         }
 
         public override bool Equals(object obj)

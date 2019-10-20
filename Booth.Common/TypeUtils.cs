@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Reflection;
 
-namespace PortfolioManager.Common
+namespace Booth.Common
 {
     public static class TypeUtils
     {
-        public static List<Type> GetSubclassesOf(this Type type, bool excludeSystemTypes)
+        public static IEnumerable<Type> GetSubclassesOf(this Type type, bool excludeSystemTypes)
         {
             List<Type> list = new List<Type>();
             IEnumerator enumerator = Thread.GetDomain().GetAssemblies().GetEnumerator();
@@ -41,6 +41,7 @@ namespace PortfolioManager.Common
                 {
                 }
             }
+
             return list;
         }
     }

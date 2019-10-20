@@ -57,12 +57,17 @@ namespace Booth.Common
             return ((date >= fromDate) && (date <= toDate));
         }
 
+        public static Boolean InRange(this DateTime date, DateRange dateRange)
+        {
+            return dateRange.Contains(date);
+        }
+
         public static DateTime EndOfWeek(this DateTime date)
         {
             if (date.DayOfWeek == DayOfWeek.Sunday)
                 return date;
             else
-                return date.AddDays(((int)date.DayOfWeek));
+                return date.AddDays(7 - ((int)date.DayOfWeek));
         }
 
         public static DateTime EndOfMonth(this DateTime date)
@@ -74,6 +79,10 @@ namespace Booth.Common
         {
             return Enumerable.Range(0, toDate.Subtract(fromDate).Days + 1)
                              .Select(d => fromDate.AddDays(d));
+        }
+        public static IEnumerable<DateTime> Days(DateRange dateRange)
+        {
+            return Days(dateRange.FromDate, dateRange.ToDate);
         }
 
         public static IEnumerable<DateTime> WeekEndingDays(DateTime fromDate, DateTime toDate)
@@ -92,6 +101,11 @@ namespace Booth.Common
             }
         }
 
+        public static IEnumerable<DateTime> WeekEndingDays(DateRange dateRange)
+        {
+            return WeekEndingDays(dateRange.FromDate, dateRange.ToDate);
+        }
+
         public static IEnumerable<DateTime> MonthEndingDays(DateTime fromDate, DateTime toDate)
         {
             var date = fromDate.EndOfMonth();
@@ -102,9 +116,18 @@ namespace Booth.Common
 
                 yield return date;
 
-                var days = DateTime.DaysInMonth(date.Year, date.Month + 1);
+                int days;
+                if (date.Month < 12)
+                    days = DateTime.DaysInMonth(date.Year, date.Month + 1);
+                else
+                    days = DateTime.DaysInMonth(date.Year + 1, date.Month);
                 date = date.AddDays(days);
             }
+        }
+
+        public static IEnumerable<DateTime> MonthEndingDays(DateRange dateRange)
+        {
+            return MonthEndingDays(dateRange.FromDate, dateRange.ToDate);
         }
 
         public static DateTime Earlist(DateTime date1, DateTime date2)
