@@ -88,13 +88,13 @@ namespace Booth.Common.Tests.DateUtilsTests
         {
             get
             {
-                yield return new TestCaseData(new DateTime(2019, 10, 07)).Returns(true).SetName("WeekdayMonday");
-                yield return new TestCaseData(new DateTime(2019, 10, 08)).Returns(true).SetName("WeekdayTuesday");
-                yield return new TestCaseData(new DateTime(2019, 10, 09)).Returns(true).SetName("WeekdayWednesday");
-                yield return new TestCaseData(new DateTime(2019, 10, 10)).Returns(true).SetName("WeekdayThursday");
-                yield return new TestCaseData(new DateTime(2019, 10, 11)).Returns(true).SetName("WeekdayFriday");
-                yield return new TestCaseData(new DateTime(2019, 10, 12)).Returns(false).SetName("WeekdaySaturday");
-                yield return new TestCaseData(new DateTime(2019, 10, 13)).Returns(false).SetName("WeekdaySunday");
+                yield return new TestCaseData(new DateTime(2019, 10, 07)).Returns(true).SetArgDisplayNames("Monday");
+                yield return new TestCaseData(new DateTime(2019, 10, 08)).Returns(true).SetArgDisplayNames("Tuesday");
+                yield return new TestCaseData(new DateTime(2019, 10, 09)).Returns(true).SetArgDisplayNames("Wednesday");
+                yield return new TestCaseData(new DateTime(2019, 10, 10)).Returns(true).SetArgDisplayNames("Thursday");
+                yield return new TestCaseData(new DateTime(2019, 10, 11)).Returns(true).SetArgDisplayNames("Friday");
+                yield return new TestCaseData(new DateTime(2019, 10, 12)).Returns(false).SetArgDisplayNames("Saturday");
+                yield return new TestCaseData(new DateTime(2019, 10, 13)).Returns(false).SetArgDisplayNames("Sunday");
             }
         }
 
@@ -102,13 +102,13 @@ namespace Booth.Common.Tests.DateUtilsTests
         {
             get
             {
-                yield return new TestCaseData(new DateTime(2019, 10, 07)).Returns(new DateTime(2019, 10, 13)).SetName("EndOfWeekMonday");
-                yield return new TestCaseData(new DateTime(2019, 10, 08)).Returns(new DateTime(2019, 10, 13)).SetName("EndOfWeekTuesday");
-                yield return new TestCaseData(new DateTime(2019, 10, 09)).Returns(new DateTime(2019, 10, 13)).SetName("EndOfWeekWednesday");
-                yield return new TestCaseData(new DateTime(2019, 10, 10)).Returns(new DateTime(2019, 10, 13)).SetName("EndOfWeekThursday");
-                yield return new TestCaseData(new DateTime(2019, 10, 11)).Returns(new DateTime(2019, 10, 13)).SetName("EndOfWeekFriday");
-                yield return new TestCaseData(new DateTime(2019, 10, 12)).Returns(new DateTime(2019, 10, 13)).SetName("EndOfWeekSaturday");
-                yield return new TestCaseData(new DateTime(2019, 10, 13)).Returns(new DateTime(2019, 10, 13)).SetName("EndOfWeekSunday");
+                yield return new TestCaseData(new DateTime(2019, 10, 07)).Returns(new DateTime(2019, 10, 13)).SetArgDisplayNames("Monday");
+                yield return new TestCaseData(new DateTime(2019, 10, 08)).Returns(new DateTime(2019, 10, 13)).SetArgDisplayNames("Tuesday");
+                yield return new TestCaseData(new DateTime(2019, 10, 09)).Returns(new DateTime(2019, 10, 13)).SetArgDisplayNames("Wednesday");
+                yield return new TestCaseData(new DateTime(2019, 10, 10)).Returns(new DateTime(2019, 10, 13)).SetArgDisplayNames("Thursday");
+                yield return new TestCaseData(new DateTime(2019, 10, 11)).Returns(new DateTime(2019, 10, 13)).SetArgDisplayNames("Friday");
+                yield return new TestCaseData(new DateTime(2019, 10, 12)).Returns(new DateTime(2019, 10, 13)).SetArgDisplayNames("Saturday");
+                yield return new TestCaseData(new DateTime(2019, 10, 13)).Returns(new DateTime(2019, 10, 13)).SetArgDisplayNames("Sunday");
             }
         }
 
@@ -116,13 +116,13 @@ namespace Booth.Common.Tests.DateUtilsTests
         {
             get
             {
-                yield return new TestCaseData(new DateTime(2000, 01, 01)).Returns(new DateTime(2000, 01, 31)).SetName("EndOfMonthJan1");
-                yield return new TestCaseData(new DateTime(2000, 01, 31)).Returns(new DateTime(2000, 01, 31)).SetName("EndOfMonthJan31");
-                yield return new TestCaseData(new DateTime(2000, 02, 01)).Returns(new DateTime(2000, 02, 29)).SetName("EndOfMonthFeb1LeapYear");
-                yield return new TestCaseData(new DateTime(2000, 02, 28)).Returns(new DateTime(2000, 02, 29)).SetName("EndOfMonthFeb28LeapYear");
-                yield return new TestCaseData(new DateTime(2000, 02, 29)).Returns(new DateTime(2000, 02, 29)).SetName("EndOfMonthFeb29LeapYear");
-                yield return new TestCaseData(new DateTime(2001, 02, 01)).Returns(new DateTime(2001, 02, 28)).SetName("EndOfMonthFeb1");
-                yield return new TestCaseData(new DateTime(2000, 10, 13)).Returns(new DateTime(2000, 10, 31)).SetName("EndOfMonthOct13");
+                yield return new TestCaseData(new DateTime(2000, 01, 01)).Returns(new DateTime(2000, 01, 31)).SetArgDisplayNames("Jan1");
+                yield return new TestCaseData(new DateTime(2000, 01, 31)).Returns(new DateTime(2000, 01, 31)).SetArgDisplayNames("Jan31");
+                yield return new TestCaseData(new DateTime(2000, 02, 01)).Returns(new DateTime(2000, 02, 29)).SetArgDisplayNames("Feb1LeapYear");
+                yield return new TestCaseData(new DateTime(2000, 02, 28)).Returns(new DateTime(2000, 02, 29)).SetArgDisplayNames("Feb28LeapYear");
+                yield return new TestCaseData(new DateTime(2000, 02, 29)).Returns(new DateTime(2000, 02, 29)).SetArgDisplayNames("Feb29LeapYear");
+                yield return new TestCaseData(new DateTime(2001, 02, 01)).Returns(new DateTime(2001, 02, 28)).SetArgDisplayNames("Feb1");
+                yield return new TestCaseData(new DateTime(2000, 10, 13)).Returns(new DateTime(2000, 10, 31)).SetArgDisplayNames("Oct13");
             }
         }
     } 
