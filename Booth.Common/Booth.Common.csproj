@@ -1,13 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Craig Booth</Authors>
     <Company />
     <Description>Commonly used types</Description>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>1.0.1</Version>
+    <PackageIcon>Booth.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Booth.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
 
 </Project>
