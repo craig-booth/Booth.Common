@@ -5,13 +5,7 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booth.Common", "Booth.Common\Booth.Common.csproj", "{4AE1229D-6E9A-4DCB-82F2-9E23513521B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booth.Scheduler", "Booth.Scheduler\Booth.Scheduler.csproj", "{C5A9EA99-8CFA-4B91-A732-C336836EE934}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booth.WpfControls", "Booth.WpfControls\Booth.WpfControls.csproj", "{97CDA3C9-069B-409B-BFF1-4EBB7B04CBBE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booth.WpfControls.Test", "Booth.WpfControls.Test\Booth.WpfControls.Test.csproj", "{7F10CF0C-2492-46CB-8FBC-D0BBF5A5C230}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booth.Common.Tests", "Booth.Common.Tests\Booth.Common.Tests.csproj", "{E681C7E1-F8B9-4BBD-878F-88FCE63B62D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booth.Common.Tests", "Booth.Common.Tests\Booth.Common.Tests.csproj", "{E681C7E1-F8B9-4BBD-878F-88FCE63B62D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,18 +17,6 @@ Global
 		{4AE1229D-6E9A-4DCB-82F2-9E23513521B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AE1229D-6E9A-4DCB-82F2-9E23513521B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AE1229D-6E9A-4DCB-82F2-9E23513521B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5A9EA99-8CFA-4B91-A732-C336836EE934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5A9EA99-8CFA-4B91-A732-C336836EE934}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5A9EA99-8CFA-4B91-A732-C336836EE934}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5A9EA99-8CFA-4B91-A732-C336836EE934}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97CDA3C9-069B-409B-BFF1-4EBB7B04CBBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97CDA3C9-069B-409B-BFF1-4EBB7B04CBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97CDA3C9-069B-409B-BFF1-4EBB7B04CBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97CDA3C9-069B-409B-BFF1-4EBB7B04CBBE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F10CF0C-2492-46CB-8FBC-D0BBF5A5C230}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F10CF0C-2492-46CB-8FBC-D0BBF5A5C230}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F10CF0C-2492-46CB-8FBC-D0BBF5A5C230}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F10CF0C-2492-46CB-8FBC-D0BBF5A5C230}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E681C7E1-F8B9-4BBD-878F-88FCE63B62D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E681C7E1-F8B9-4BBD-878F-88FCE63B62D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E681C7E1-F8B9-4BBD-878F-88FCE63B62D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
