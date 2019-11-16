@@ -12,10 +12,9 @@ namespace Booth.Common.Tests.DateRangeTests
         {
             // For the test ensure that the date format is in Australian format
             var savedCulture = Thread.CurrentThread.CurrentCulture;
-            var testCulture = CultureInfo.CreateSpecificCulture("en-AU");
+            var testCulture = new CultureInfo("en-AU");
+            testCulture.DateTimeFormat.ShortDatePattern = "d/MM/yyyy";
             Thread.CurrentThread.CurrentCulture = testCulture;
-
-            Assert.That(testCulture.DateTimeFormat.ShortDatePattern, Is.EqualTo("d/M/yyy"));
 
             var dateRange = new DateRange(new DateTime(2000, 01, 01), new DateTime(2000, 01, 31));
 
