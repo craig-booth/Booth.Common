@@ -4,27 +4,33 @@ pipeline {
 	environment {
 		PROJECT      = './Booth.Common/Booth.Common.csproj'
         TEST_PROJECT = './Booth.Common.Tests/Booth.Common.Tests.csproj'
+
+		NUGET_KEY = credentials('nuget')
     }
 
     stages {
+		stage('Build') {
+			steps {
+				sh "dotnet build ${PROJECT} --configuration Release"
+            }
+		}
 	    stage('Test') {
 			steps {
-				sh 'mkdir ./test'
-				sh "dotnet test ${TEST_PROJECT} --configuration Release --output ./test --logger trx --results-directory ./result"
+				sh "dotnet test ${TEST_PROJECT} --configuration Release --logger trx --results-directory ./testresults"
             }
 			post {
 				always {
 					xunit (
 						thresholds: [ skipped(failureThreshold: '0'), failed(failureThreshold: '0') ],
-						tools: [ MSTest(pattern: 'result/*.trx') ]
+						tools: [ MSTest(pattern: 'testresults/*.trx') ]
 						)
 				}
 			}
         }
-        stage('Build') {
+        stage('Deploy') {
 			steps {
-				sh 'mkdir ./app'
-				sh "dotnet pack ${PROJECT} --configuration Release --output ./app"
+				sh "dotnet pack ${PROJECT} --configuration Release --output ./deploy"
+				sh "dotnet nuget push ./deploy/*.nupkg -k ${NUGET_KEY} -s https://api.nuget.org/v3/index.json"
             }
 		}
     }
