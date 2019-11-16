@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Threading;
 using NUnit.Framework;
 
 namespace Booth.Common.Tests.DateRangeTests
@@ -8,9 +10,16 @@ namespace Booth.Common.Tests.DateRangeTests
         [TestCase]
         public void ToStringCorrect()
         {
+            // For the test ensure that the date format is in Australian format
+            var savedCulture = Thread.CurrentThread.CurrentCulture;
+            var testCulture = CultureInfo.CreateSpecificCulture("en-AU");
+            Thread.CurrentThread.CurrentCulture = testCulture;
+
             var dateRange = new DateRange(new DateTime(2000, 01, 01), new DateTime(2000, 01, 31));
 
             Assert.That(dateRange.ToString(), Is.EqualTo("1/01/2000 - 31/01/2000"));
+
+            Thread.CurrentThread.CurrentCulture = savedCulture;
         }
     }
 }
