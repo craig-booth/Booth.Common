@@ -10,9 +10,9 @@ namespace Booth.Common.Tests.DateRangeTests
             [TestCase]
             public void BeforeRange()
             {
-                var dateRange = new DateRange(new DateTime(2000, 01, 01), new DateTime(2000, 01, 31));
+                var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-                var testDate = new DateTime(1999, 12, 07);
+                var testDate = new Date(1999, 12, 07);
 
                 Assert.That(dateRange.Contains(testDate), Is.Not.True);
             }
@@ -20,9 +20,9 @@ namespace Booth.Common.Tests.DateRangeTests
             [TestCase]
             public void FirstDayOfRange()
             {
-                var dateRange = new DateRange(new DateTime(2000, 01, 01), new DateTime(2000, 01, 31));
+                var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-                var testDate = new DateTime(2000, 01, 01);
+                var testDate = new Date(2000, 01, 01);
 
                 Assert.That(dateRange.Contains(testDate), Is.True);
             }
@@ -30,9 +30,9 @@ namespace Booth.Common.Tests.DateRangeTests
             [TestCase]
             public void InRange()
             {
-                var dateRange = new DateRange(new DateTime(2000, 01, 01), new DateTime(2000, 01, 31));
+                var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-                var testDate = new DateTime(2000, 01, 15);
+                var testDate = new Date(2000, 01, 15);
 
                 Assert.That(dateRange.Contains(testDate), Is.True);
             }
@@ -40,9 +40,9 @@ namespace Booth.Common.Tests.DateRangeTests
             [TestCase]
             public void LastDayOfRange()
             {
-                var dateRange = new DateRange(new DateTime(2000, 01, 01), new DateTime(2000, 01, 31));
+                var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-                var testDate = new DateTime(2000, 01, 31);
+                var testDate = new Date(2000, 01, 31);
 
                 Assert.That(dateRange.Contains(testDate), Is.True);
             }
@@ -50,9 +50,9 @@ namespace Booth.Common.Tests.DateRangeTests
             [TestCase]
             public void AfterRange()
             {
-                var dateRange = new DateRange(new DateTime(2000, 01, 01), new DateTime(2000, 01, 31));
+                var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-                var testDate = new DateTime(2002, 03, 01);
+                var testDate = new Date(2002, 03, 01);
 
                 Assert.That(dateRange.Contains(testDate), Is.Not.True);
             }

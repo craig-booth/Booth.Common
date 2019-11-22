@@ -16,7 +16,7 @@ namespace Booth.Common.Tests.DateRangeTests
             testCulture.DateTimeFormat.ShortDatePattern = "d/MM/yyyy";
             Thread.CurrentThread.CurrentCulture = testCulture;
 
-            var dateRange = new DateRange(new DateTime(2000, 01, 01), new DateTime(2000, 01, 31));
+            var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
             Assert.That(dateRange.ToString(), Is.EqualTo("1/01/2000 - 31/01/2000"));
 

@@ -6,25 +6,8 @@ namespace Booth.Common
 {
     public static class DateUtils
     {
-        private readonly static DateTime _NoStartDate = new DateTime(0001, 01, 01);
-        private readonly static DateTime _NoEndDate = new DateTime(9999, 12, 31);
 
-        public static DateTime NoDate
-        {
-            get { return _NoStartDate; }
-        }
-
-        public static DateTime NoStartDate 
-        {
-            get { return _NoStartDate; }
-        }
-
-        public static DateTime NoEndDate
-        {
-            get { return _NoEndDate; }
-        }
-
-        public static int FinancialYear(this DateTime date)
+        public static int FinancialYear(this Date date)
         {
             if (date.Month <= 6)
                 return date.Year;
@@ -37,32 +20,32 @@ namespace Booth.Common
             return new DateRange(StartOfFinancialYear(financialYear), EndOfFinancialYear(financialYear));
         }
 
-        public static DateTime StartOfFinancialYear(int financialYear)
+        public static Date StartOfFinancialYear(int financialYear)
         {
-            return  new DateTime(financialYear - 1, 7, 1);
+            return  new Date(financialYear - 1, 7, 1);
         }
 
-        public static DateTime EndOfFinancialYear(int financialYear)
+        public static Date EndOfFinancialYear(int financialYear)
         {
-            return new DateTime(financialYear, 6, 30);
+            return new Date(financialYear, 6, 30);
         }
 
-        public static Boolean WeekDay(this DateTime date)
+        public static Boolean WeekDay(this Date date)
         {
             return (date.DayOfWeek >= DayOfWeek.Monday) && (date.DayOfWeek <= DayOfWeek.Friday);
         }
 
-        public static Boolean Between(this DateTime date, DateTime fromDate, DateTime toDate)
+        public static Boolean Between(this Date date, Date fromDate, Date toDate)
         {
             return ((date >= fromDate) && (date <= toDate));
         }
 
-        public static Boolean InRange(this DateTime date, DateRange dateRange)
+        public static Boolean InRange(this Date date, DateRange dateRange)
         {
             return dateRange.Contains(date);
         }
 
-        public static DateTime EndOfWeek(this DateTime date)
+        public static Date EndOfWeek(this Date date)
         {
             if (date.DayOfWeek == DayOfWeek.Sunday)
                 return date;
@@ -70,22 +53,22 @@ namespace Booth.Common
                 return date.AddDays(7 - ((int)date.DayOfWeek));
         }
 
-        public static DateTime EndOfMonth(this DateTime date)
+        public static Date EndOfMonth(this Date date)
         {
-            return new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+            return new Date(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
         }
 
-        public static IEnumerable<DateTime> Days(DateTime fromDate, DateTime toDate)
+        public static IEnumerable<Date> Days(Date fromDate, Date toDate)
         {
             return Enumerable.Range(0, toDate.Subtract(fromDate).Days + 1)
                              .Select(d => fromDate.AddDays(d));
         }
-        public static IEnumerable<DateTime> Days(DateRange dateRange)
+        public static IEnumerable<Date> Days(DateRange dateRange)
         {
             return Days(dateRange.FromDate, dateRange.ToDate);
         }
 
-        public static IEnumerable<DateTime> WeekEndingDays(DateTime fromDate, DateTime toDate)
+        public static IEnumerable<Date> WeekEndingDays(Date fromDate, Date toDate)
         {
             var startDate = fromDate.EndOfWeek();
             var days = 0;
@@ -101,12 +84,12 @@ namespace Booth.Common
             }
         }
 
-        public static IEnumerable<DateTime> WeekEndingDays(DateRange dateRange)
+        public static IEnumerable<Date> WeekEndingDays(DateRange dateRange)
         {
             return WeekEndingDays(dateRange.FromDate, dateRange.ToDate);
         }
 
-        public static IEnumerable<DateTime> MonthEndingDays(DateTime fromDate, DateTime toDate)
+        public static IEnumerable<Date> MonthEndingDays(Date fromDate, Date toDate)
         {
             var date = fromDate.EndOfMonth();
             while (true)
@@ -125,22 +108,22 @@ namespace Booth.Common
             }
         }
 
-        public static IEnumerable<DateTime> MonthEndingDays(DateRange dateRange)
+        public static IEnumerable<Date> MonthEndingDays(DateRange dateRange)
         {
             return MonthEndingDays(dateRange.FromDate, dateRange.ToDate);
         }
 
-        public static DateTime Earlist(DateTime date1, DateTime date2)
+        public static Date Earlist(Date date1, Date date2)
         {
             return  date1 <= date2 ? date1 : date2;
         }
 
-        public static DateTime Latest(DateTime date1, DateTime date2)
+        public static Date Latest(Date date1, Date date2)
         {
             return date1 >= date2 ? date1 : date2;
         }
 
-        public static string ToIsoDateString(this DateTime date)
+        public static string ToIsoDateString(this Date date)
         {
             return date.ToString("yyyy-MM-dd");
         }

@@ -6,16 +6,16 @@ namespace Booth.Common
 {
     public struct DateRange
     {
-        public DateTime FromDate;
-        public DateTime ToDate;
+        public Date FromDate;
+        public Date ToDate;
 
-        public DateRange(DateTime fromDate, DateTime toDate)
+        public DateRange(Date fromDate, Date toDate)
         {
             FromDate = fromDate;
             ToDate = toDate;
         }
 
-        public bool Contains(DateTime date)
+        public bool Contains(Date date)
         {
             return (FromDate <= date) && (ToDate >= date);
         }

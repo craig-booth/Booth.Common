@@ -145,6 +145,8 @@ namespace Booth.Common
         {
             if (value == null)
                 return 1;
+            else if (value is Date)
+                return _DateTime.CompareTo(((Date)(value)).DateTime);
             else if (value is DateTime)
                 return _DateTime.CompareTo((DateTime)value);
             else

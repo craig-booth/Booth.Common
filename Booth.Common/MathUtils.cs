@@ -19,16 +19,16 @@ namespace Booth.Common
 
     public class DailyAmount
     {
-        public DateTime Date;
+        public Date Date;
         public decimal Amount;
 
         public DailyAmount()
         {
-            Date = new DateTime();
+            Date = new Date();
             Amount = 0.00m;
         }
 
-        public DailyAmount(DateTime date, decimal amount)
+        public DailyAmount(Date date, decimal amount)
         {
             Date = date;
             Amount = amount;
