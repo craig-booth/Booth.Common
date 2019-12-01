@@ -1,13 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-
+using System.Threading;
 using NUnit.Framework;
 
 namespace Booth.Common.Tests.DateTests
 {
     class DateParseTests
     {
+        private CultureInfo _SavedCulture;
+
+        [SetUp]
+        public void SetCulture()
+        {
+            // For the test ensure that the date format is in Australian format
+            _SavedCulture = Thread.CurrentThread.CurrentCulture;
+            var testCulture = new CultureInfo("en-AU");
+            testCulture.DateTimeFormat.ShortDatePattern = "d/MM/yyyy";
+            Thread.CurrentThread.CurrentCulture = testCulture;
+        }
+
+        [TearDown]
+        public void RestoreCulture()
+        {
+            Thread.CurrentThread.CurrentCulture = _SavedCulture;
+        }
+
         [TestCase("2018-08-18")]
         [TestCase("18/8/2018")]
         [TestCase("18/8/18")]
