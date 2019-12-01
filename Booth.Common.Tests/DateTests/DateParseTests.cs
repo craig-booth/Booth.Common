@@ -10,8 +10,6 @@ namespace Booth.Common.Tests.DateTests
 
         [TestCase("2018-08-18")]
         [TestCase("18/8/2018")]
-        [TestCase("18/8/18")]
-        [TestCase("18/08/2018 07:22:16")]
         [TestCase("Sat, 18 Aug 2018 07:22:16 GMT")]
         public void ParseTest(string s)
         {
@@ -29,8 +27,6 @@ namespace Booth.Common.Tests.DateTests
 
         [TestCase("2018-08-18", true)]
         [TestCase("18/8/2018", true)]
-        [TestCase("18/8/18", true)]
-        [TestCase("18/08/2018 07:22:16", true)]
         [TestCase("Sat, 18 Aug 2018 07:22:16 GMT", true)]
         public void TryParseTest(string s, bool successful)
         {
