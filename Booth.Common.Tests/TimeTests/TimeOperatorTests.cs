@@ -18,6 +18,13 @@ namespace Booth.Common.Tests.TimeTests
             Assert.That(newTime, Is.EqualTo(new Time(16, 06, 48)));
         }
 
+        [TestCase]
+        public void AddTimeSpanOverflowTest()
+        {
+            var time = new Time(14, 02, 24);
+
+            Assert.That(() => time + new TimeSpan(10, 4, 24), Throws.InstanceOf(typeof(OverflowException)));
+        }
 
         [TestCase]
         public void SubtractTimeSpanTest()
@@ -26,6 +33,14 @@ namespace Booth.Common.Tests.TimeTests
             var newTime = time - new TimeSpan(2, 4, 24);
 
             Assert.That(newTime, Is.EqualTo(new Time(11, 58, 00)));
+        }
+
+        [TestCase]
+        public void SubtractTimeSpanOverflowTest()
+        {
+            var time = new Time(14, 02, 24);
+
+            Assert.That(() => time - new TimeSpan(22, 4, 24), Throws.InstanceOf(typeof(OverflowException)));
         }
 
         [TestCase]

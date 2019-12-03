@@ -100,7 +100,12 @@ namespace Booth.Common
 
         public Time Add(TimeSpan value)
         {
-            return new Time(TimeSpan.Add(value));
+            var newTime = TimeSpan.Add(value);
+
+            if (newTime.Days >= 1)
+                throw new OverflowException();
+
+            return new Time(newTime);
         }
 
         public Time AddSeconds(int seconds)
@@ -195,7 +200,12 @@ namespace Booth.Common
 
         public Time Subtract(TimeSpan value)
         {
-            return new Time(TimeSpan.Subtract(value));
+            var newTime = TimeSpan.Subtract(value);
+
+            if (newTime.Ticks < 0)
+                throw new OverflowException();
+
+            return new Time(newTime);
         }
 
         public TimeSpan Subtract(Time value)
