@@ -51,16 +51,16 @@ namespace Booth.Common.Tests.TimeTests
             Assert.Multiple(() =>
             {
                 Assert.That(time.Add(new TimeSpan(0, 0, 0)), Is.EqualTo(time));
-                Assert.That(() => time.Add(new TimeSpan(1, 0, 0, 0)), Throws.TypeOf(typeof(ArgumentOutOfRangeException)));
+                Assert.That(() => time.Add(new TimeSpan(1, 0, 0, 0)), Throws.TypeOf(typeof(OverflowException)));
                 Assert.That(time.Add(new TimeSpan(0, 0, 30)), Is.EqualTo(new Time(14, 02, 54)));
                 Assert.That(time.Add(new TimeSpan(0, 0, 120)), Is.EqualTo(new Time(14, 04, 24)));
                 Assert.That(time.Add(new TimeSpan(0, 24, 0)), Is.EqualTo(new Time(14, 26, 24)));
                 Assert.That(time.Add(new TimeSpan(0, 64, 0)), Is.EqualTo(new Time(15, 06, 24)));
                 Assert.That(time.Add(new TimeSpan(2, 0, 0)), Is.EqualTo(new Time(16, 02, 24)));
-                Assert.That(() => time.Add(new TimeSpan(10, 0, 0)), Throws.TypeOf(typeof(ArgumentOutOfRangeException)));
+                Assert.That(() => time.Add(new TimeSpan(10, 0, 0)), Throws.TypeOf(typeof(OverflowException)));
                 Assert.That(time.Add(new TimeSpan(-1, -1, -1)), Is.EqualTo(new Time(13, 01, 23)));
                 Assert.That(time.Add(new TimeSpan(0, -5, 7)), Is.EqualTo(new Time(13, 57, 31)));
-                Assert.That(() => time.Add(new TimeSpan(-1, 0, 0, 0)), Throws.TypeOf(typeof(ArgumentOutOfRangeException)));
+                Assert.That(() => time.Add(new TimeSpan(-1, 0, 0, 0)), Throws.TypeOf(typeof(OverflowException)));
             });
         }
 

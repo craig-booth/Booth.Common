@@ -102,7 +102,7 @@ namespace Booth.Common
         {
             var newTime = TimeSpan.Add(value);
 
-            if (newTime.Days >= 1)
+            if ((newTime.Ticks < 0) || (newTime.Days >= 1))
                 throw new OverflowException();
 
             return new Time(newTime);
@@ -202,7 +202,7 @@ namespace Booth.Common
         {
             var newTime = TimeSpan.Subtract(value);
 
-            if (newTime.Ticks < 0)
+            if ((newTime.Ticks < 0) || (newTime.Days >= 1))
                 throw new OverflowException();
 
             return new Time(newTime);
