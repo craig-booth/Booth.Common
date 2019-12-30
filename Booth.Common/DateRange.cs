@@ -11,6 +11,9 @@ namespace Booth.Common
 
         public DateRange(Date fromDate, Date toDate)
         {
+            if (fromDate > toDate)
+                throw new ArgumentException("From Date must be on or before To Date");
+
             FromDate = fromDate;
             ToDate = toDate;
         }
