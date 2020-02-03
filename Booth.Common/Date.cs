@@ -167,8 +167,10 @@ namespace Booth.Common
         {
             if (value == null)
                 return false;
-            else if (value is DateTime)
+            else if (value is Date)
                 return Equals((Date)value);
+            else if (value is DateTime)
+                return _DateTime.Equals((DateTime)value);
             else
                 throw new ArgumentException("Object must be of type Date or DateTime");
         }
