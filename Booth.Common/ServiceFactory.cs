@@ -3,7 +3,17 @@ using System.Collections.Generic;
 
 namespace Booth.Common
 {
-    public class ServiceFactory<I> 
+    public interface IServiceFactory<I>
+    {
+        void Clear();
+        I GetService(object obj);
+        I GetService(Type type);
+        I GetService<T>();
+        ServiceFactory<I> Register<T>(Func<I> factory);
+        ServiceFactory<I> Register<T>(I instance);
+    }
+
+    public class ServiceFactory<I> : IServiceFactory<I>
     {
         private class ServiceInstance
         {

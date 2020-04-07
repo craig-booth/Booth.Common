@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace Booth.Common
 {
-    public struct DateRange
+    public struct DateRange : IEquatable<DateRange>
     {
         public Date FromDate;
         public Date ToDate;
@@ -55,6 +56,11 @@ namespace Booth.Common
         public override int GetHashCode()
         {
             return (FromDate.GetHashCode() * -1521134295) + ToDate.GetHashCode();
+        }
+
+        public bool Equals(DateRange other)
+        {
+            return this == other;
         }
     }
 }
