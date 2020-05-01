@@ -1,60 +1,67 @@
 ﻿using System;
-using NUnit.Framework;
+
+using Xunit;
+using FluentAssertions;
 
 using Booth.Common;
 
 namespace Booth.Common.Tests.DateRangeTests
 {
-    class ContainsTests
+    public class ContainsTests
     {
-            [TestCase]
-            public void BeforeRange()
-            {
-                var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
+        [Fact]
+        public void BeforeRange()
+        {
+            var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-                var testDate = new Date(1999, 12, 07);
+            var testDate = new Date(1999, 12, 07);
+            var result = dateRange.Contains(testDate);
 
-                Assert.That(dateRange.Contains(testDate), Is.Not.True);
-            }
+            result.Should().BeFalse();
+        }
 
-            [TestCase]
-            public void FirstDayOfRange()
-            {
-                var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
+        [Fact]
+        public void FirstDayOfRange()
+        {
+            var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-                var testDate = new Date(2000, 01, 01);
+            var testDate = new Date(2000, 01, 01);
+            var result = dateRange.Contains(testDate);
 
-                Assert.That(dateRange.Contains(testDate), Is.True);
-            }
+            result.Should().BeTrue();
+        }
 
-            [TestCase]
-            public void InRange()
-            {
-                var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
+        [Fact]
+        public void InRange()
+        {
+            var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-                var testDate = new Date(2000, 01, 15);
+            var testDate = new Date(2000, 01, 15);
+            var result = dateRange.Contains(testDate);
 
-                Assert.That(dateRange.Contains(testDate), Is.True);
-            }
+            result.Should().BeTrue();
+        }
 
-            [TestCase]
-            public void LastDayOfRange()
-            {
-                var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
+        [Fact]
+        public void LastDayOfRange()
+        {
+            var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-                var testDate = new Date(2000, 01, 31);
+            var testDate = new Date(2000, 01, 31);
+            var result = dateRange.Contains(testDate);
 
-                Assert.That(dateRange.Contains(testDate), Is.True);
-            }
+            result.Should().BeTrue();
+        }
 
-            [TestCase]
-            public void AfterRange()
-            {
-                var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
+        [Fact]
+        public void AfterRange()
+        {
+            var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-                var testDate = new Date(2002, 03, 01);
+            var testDate = new Date(2002, 03, 01);
+            var result = dateRange.Contains(testDate);
 
-                Assert.That(dateRange.Contains(testDate), Is.Not.True);
-            }
+            result.Should().BeFalse();
+        }
     }
 }

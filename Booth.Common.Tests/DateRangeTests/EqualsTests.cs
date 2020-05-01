@@ -1,35 +1,43 @@
 ﻿using System;
-using NUnit.Framework;
+
+using Xunit;
+using FluentAssertions;
 
 namespace Booth.Common.Tests.DateRangeTests
 {
-    class EqualsTests
+    public class EqualsTests
     {
-        [TestCase]
+        [Fact]
         public void IsEqual()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-            Assert.That(dateRange1.Equals(dateRange2), Is.True);
+            var result = dateRange1.Equals(dateRange2);
+
+            result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void IsNotEqual()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2002, 01, 01), new Date(2002, 01, 31));
 
-            Assert.That(dateRange1.Equals(dateRange2), Is.Not.True);
+            var result = dateRange1.Equals(dateRange2);
+
+            result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void IsDifferentObjectType()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var date = new DateTime(2000, 01, 01);
 
-            Assert.That(dateRange1.Equals(date), Is.Not.True);
+            var result = dateRange1.Equals(date);
+
+            result.Should().BeFalse();
         }
     }
 }

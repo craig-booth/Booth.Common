@@ -2,103 +2,239 @@
 using System.Collections.Generic;
 using System.Text;
 
-using NUnit.Framework;
+using Xunit;
+using FluentAssertions;
+using FluentAssertions.Execution;
 
 namespace Booth.Common.Tests.DateTests
 {
-    class DateComparisonTests
+    public class DateComparisonTests
     {
-        [TestCase]
-        public void CompareTest()
+        [Fact]
+        public void CompareDate1LessThanDate2()
         {
-            Assert.Multiple(() =>
-            {
-                Assert.That(Date.Compare(new Date(2019, 11, 18), new Date(2019, 11, 01)), Is.EqualTo(1));
-                Assert.That(Date.Compare(new Date(2019, 11, 18), new Date(2019, 11, 18)), Is.EqualTo(0));
-                Assert.That(Date.Compare(new Date(2019, 11, 18), new Date(2019, 11, 22)), Is.EqualTo(-1));
-            });
+            var result = Date.Compare(new Date(2019, 11, 18), new Date(2019, 11, 01));
+            result.Should().BePositive();
         }
 
-        [TestCase]
-        public void CompareToTest()
+        [Fact]
+        public void CompareDate1EqualToDate2()
         {
-            Assert.Multiple(() =>
-            {
-                Assert.That(new Date(2019, 11, 18).CompareTo(new Date(2019, 11, 01)), Is.EqualTo(1));
-                Assert.That(new Date(2019, 11, 18).CompareTo(new Date(2019, 11, 18)), Is.EqualTo(0));
-                Assert.That(new Date(2019, 11, 18).CompareTo(new Date(2019, 11, 22)), Is.EqualTo(-1));
-            });
+            var result = Date.Compare(new Date(2019, 11, 18), new Date(2019, 11, 18));
+            result.Should().Be(0);
         }
 
-        [TestCase]
-        public void CompareToObjectTest()
+        [Fact]
+        public void CompareDate1GreaterThanDate2()
         {
-            Assert.Multiple(() =>
-            {
-                Assert.That(new Date(2019, 11, 18).CompareTo(null), Is.EqualTo(1));
-                Assert.That(new Date(2019, 11, 18).CompareTo(new Date(2019, 11, 18)), Is.EqualTo(0));
-                Assert.That(new Date(2019, 11, 18).CompareTo(new DateTime(2019, 11, 18)), Is.EqualTo(0));
-                Assert.That(() => new Date(2019, 11, 18).CompareTo(5), Throws.ArgumentException);
-            });
+            var result = Date.Compare(new Date(2019, 11, 18), new Date(2019, 11, 22));
+            result.Should().BeNegative();
         }
 
-        [TestCase]
-        public void EqualsTest()
-        {
-            Assert.Multiple(() =>
-            {
-                Assert.That(new Date(2019, 11, 18).Equals(new Date(2019, 11, 01)), Is.False);
-                Assert.That(new Date(2019, 11, 18).Equals(new Date(2019, 11, 18)), Is.True);
-                Assert.That(new Date(2019, 11, 18).Equals(new Date(2019, 11, 22)), Is.False);
-            });
-        }
-
-        [TestCase]
-        public void EqualsObjectNullTest()
-        {
-            Assert.That(new Date(2019, 11, 18).Equals(null), Is.False);
-        }
-
-        [TestCase]
-        public void EqualsObjectDateTest()
+        [Fact]
+        public void CompareToDateLessThanThisDate()
         {
             var date = new Date(2019, 11, 18);
 
-            Assert.That(new Date(2019, 11, 18).Equals((object)date), Is.True);
+            var result = date.CompareTo(new Date(2019, 11, 01));
+
+            result.Should().BePositive();
         }
 
-        [TestCase]
-        public void EqualsObjectDateTimeTest()
+        [Fact]
+        public void CompareToDateEqualToThisDate()
         {
-            Assert.Multiple(() =>
-            {
-                Assert.That(new Date(2019, 11, 18).Equals(new DateTime(2019, 11, 01)), Is.False);
-                Assert.That(new Date(2019, 11, 18).Equals(new DateTime(2019, 11, 18)), Is.True);
-                Assert.That(new Date(2019, 11, 18).Equals(new DateTime(2019, 11, 22)), Is.False);
-            });
+            var date = new Date(2019, 11, 18);
+
+            var result = date.CompareTo(new Date(2019, 11, 18));
+
+            result.Should().Be(0);
         }
 
-        [TestCase]
-        public void EqualsObjectStringTest()
+        [Fact]
+        public void CompareToDateGreaterThanThisDate()
         {
-            Assert.That(() => new Date(2019, 11, 18).Equals("Hello"), Throws.ArgumentException);
+            var date = new Date(2019, 11, 18);
+
+            var result = date.CompareTo(new Date(2019, 11, 22));
+
+            result.Should().BeNegative();
         }
 
-        [TestCase]
-        public void StaticEqualsObjectTest()
+
+        [Fact]
+        public void CompareToNullObject()
         {
-            Assert.Multiple(() =>
-            {
-                Assert.That(Date.Equals(new Date(2019, 11, 18), new Date(2019, 11, 01)), Is.False);
-                Assert.That(Date.Equals(new Date(2019, 11, 18), new Date(2019, 11, 18)), Is.True);
-                Assert.That(Date.Equals(new Date(2019, 11, 18), new Date(2019, 11, 22)), Is.False);
-            });
+            var date = new Date(2019, 11, 18);
+
+            var result = date.CompareTo(null);
+
+            result.Should().Be(1);
         }
 
-        [TestCase]
-        public void GetHashCodeTest()
+        [Fact]
+        public void CompareToDateObject()
         {
-            Assert.That(new Date(2019, 11, 18).GetHashCode(), Is.Not.EqualTo(0));
+            var date = new Date(2019, 11, 18);
+
+            var result = date.CompareTo(new Date(2019, 11, 18));
+
+            result.Should().Be(0);
+        }
+
+        [Fact]
+        public void CompareToDateTimeObject()
+        {
+            var date = new Date(2019, 11, 18);
+
+            var result = date.CompareTo(new DateTime(2019, 11, 18));
+
+            result.Should().Be(0);
+        }
+
+        [Fact]
+        public void CompareToInteger()
+        {
+            var date = new Date(2019, 11, 18);
+
+            Action a = () => date.CompareTo(5);
+
+            a.Should().ThrowExactly<ArgumentException>();
+        }
+
+        [Fact]
+        public void EqualsDateLessThanThisDate()
+        {
+            var date = new Date(2019, 11, 18);
+
+            var result = date.Equals(new Date(2019, 11, 01));
+
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void EqualsDateEqualThisDate()
+        {
+            var date = new Date(2019, 11, 18);
+
+            var result = date.Equals(new Date(2019, 11, 18));
+
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public void EqualsDateGreaterThanThisDate()
+        {
+            var date = new Date(2019, 11, 18);
+
+            var result = date.Equals(new Date(2019, 11, 22));
+
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void EqualsObjectNull()
+        {
+            var date = new Date(2019, 11, 18);
+
+            var result = date.Equals(null);
+
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void EqualsObjectDate()
+        {
+            var date = new Date(2019, 11, 18);
+            var date2 = new Date(2019, 11, 18);
+
+            var result = date.Equals((object)date2);
+
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public void EqualsObjectDateTimeSameDateWithTimeComponent()
+        {
+            var date = new Date(2019, 11, 18);
+
+            var result = date.Equals(new DateTime(2019, 11, 18, 1, 23, 50));
+
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void EqualsObjectDateTimeSameDateWithoutTimeComponent()
+        {
+            var date = new Date(2019, 11, 18);
+
+            var result = date.Equals(new DateTime(2019, 11, 18));
+
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public void EqualsObjectDateTimeDifferentDateWithTimeComponent()
+        {
+            var date = new Date(2019, 11, 18);
+
+            var result = date.Equals(new DateTime(2019, 11, 01, 1, 23, 50));
+
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void EqualsObjectDateTimeDifferentDateWithoutTimeComponent()
+        {
+            var date = new Date(2019, 11, 18);
+
+            var result = date.Equals(new DateTime(2019, 11, 01));
+
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void EqualsObjectString()
+        {
+            var date = new Date(2019, 11, 18);
+
+            Action a = () => date.Equals("Hello");
+
+            a.Should().ThrowExactly<ArgumentException>();
+        }
+
+        [Fact]
+        public void StaticEqualsDate1LessThanDate2()
+        {
+            var result = Date.Equals(new Date(2019, 11, 18), new Date(2019, 11, 01));
+
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void StaticEqualsDate1LessEqualDate2()
+        {
+            var result = Date.Equals(new Date(2019, 11, 18), new Date(2019, 11, 18));
+
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public void StaticEqualsDate1GreaterThanDate2()
+        {
+            var result = Date.Equals(new Date(2019, 11, 18), new Date(2019, 11, 22));
+
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void DateGetHashCode()
+        {
+            var date = new Date(2019, 11, 18);
+
+            var hashCode = date.GetHashCode();
+
+            hashCode.Should().Be(new DateTime(2019, 11, 18).GetHashCode());
         }
     }
 }

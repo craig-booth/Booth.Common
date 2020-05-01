@@ -2,112 +2,122 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
-using NUnit.Framework;
+
+using Xunit;
+using FluentAssertions;
+using FluentAssertions.Execution;
 
 namespace Booth.Common.Tests.DateTests
 {
-    class DateTests
+    public class DateTests
     {
-        [TestCase]
-        public void TodayTest()
+        [Fact]
+        public void Today()
         {
-            Assert.That(Date.Today.DateTime, Is.EqualTo(DateTime.Today));
+            var today = Date.Today;
+
+            today.Should().BeEquivalentTo(DateTime.Today.Date);
         }
 
-        [TestCase]
-        public void DayTest()
-        {
-            var date = new Date(2019, 11, 04);
-            Assert.That(date.Day, Is.EqualTo(4));
-        }
-
-        [TestCase]
-        public void MonthTest()
+        [Fact]
+        public void Day()
         {
             var date = new Date(2019, 11, 04);
-            Assert.That(date.Month, Is.EqualTo(11));
+
+            date.Day.Should().Be(4);
         }
 
-        [TestCase]
-        public void YearTest()
+        [Fact]
+        public void Month()
         {
             var date = new Date(2019, 11, 04);
-            Assert.That(date.Year, Is.EqualTo(2019));
+
+            date.Month.Should().Be(11);
         }
 
-        [TestCase]
-        public void DayOfWeekTest()
+        [Fact]
+        public void Year()
         {
             var date = new Date(2019, 11, 04);
-            Assert.That(date.DayOfWeek, Is.EqualTo(DayOfWeek.Monday));
+
+            date.Year.Should().Be(2019);
         }
 
-        [TestCase]
-        public void DayOfYearTest()
+        [Fact]
+        public void DateDayOfWeek()
         {
             var date = new Date(2019, 11, 04);
-            Assert.That(date.DayOfYear, Is.EqualTo(308));
+
+            date.DayOfWeek.Should().Be(DayOfWeek.Monday);
+        }
+
+        [Fact]
+        public void DayOfYear()
+        {
+            var date = new Date(2019, 11, 04);
+
+            date.DayOfYear.Should().Be(308);
         }
 
 
 
-        [TestCase]
-        public void AddTimeSpanTest()
+        [Fact]
+        public void AddTimeSpan()
         {
             var date = new Date(2019, 11, 04);
             var newDate = date.Add(new TimeSpan(0, 26, 3, 0, 0));
 
-            Assert.That(newDate, Is.EqualTo(new Date(2019, 11, 05)));
+            newDate.Should().Be(new Date(2019, 11, 05));
         }
 
-        [TestCase]
-        public void AddDaysTest()
+        [Fact]
+        public void AddDays()
         {
             var date = new Date(2019, 11, 04);
             var newDate = date.AddDays(45);
 
-            Assert.That(newDate, Is.EqualTo(new Date(2019, 12, 19)));
+            newDate.Should().Be(new Date(2019, 12, 19));
         }
 
-        [TestCase]
-        public void AddMonthsTest()
+        [Fact]
+        public void AddMonths()
         {
             var date = new Date(2019, 11, 04);
             var newDate = date.AddMonths(4);
 
-            Assert.That(newDate, Is.EqualTo(new Date(2020, 03, 04)));
+            newDate.Should().Be(new Date(2020, 03, 04));
         }
 
-        [TestCase]
-        public void AddYearsTest()
+        [Fact]
+        public void AddYears()
         {
             var date = new Date(2019, 11, 04);
             var newDate = date.AddYears(2);
 
-            Assert.That(newDate, Is.EqualTo(new Date(2021, 11, 04)));
+            newDate.Should().Be(new Date(2021, 11, 04));
         }
 
 
-        [TestCase]
-        public void SubtractTimeSpanTest()
+        [Fact]
+        public void SubtractTimeSpan()
         {
             var date = new Date(2019, 11, 04);
             var newDate = date.Subtract(new TimeSpan(0, 26, 3, 0, 0));
 
-            Assert.That(newDate, Is.EqualTo(new Date(2019, 11, 02)));
+            newDate.Should().Be(new Date(2019, 11, 02));
         }
 
-        [TestCase]
-        public void SubtractDateTest()
+        [Fact]
+        public void SubtractDate()
         {
             var date = new Date(2019, 11, 04);
-            var newDate = date.Subtract(new Date(2019, 11, 30));
+            var timeSpan = date.Subtract(new Date(2019, 11, 30));
 
-            Assert.That(newDate, Is.EqualTo(new TimeSpan(-26, 0, 0, 0)));
+            timeSpan.Should().Be(new TimeSpan(-26, 0, 0, 0));
         }            
 
-        [TestCase]
-        public void GetObjectDataTest()
+        [Fact]
+        public void GetObjectData()
         {
             var date = new Date(2019, 11, 19);
 
@@ -116,15 +126,26 @@ namespace Booth.Common.Tests.DateTests
             var context = new StreamingContext();
             date.GetObjectData(info, context);
 
-            Assert.Multiple(() =>
             {
-                Assert.That(info.GetValue("Day", typeof(int)), Is.EqualTo(19));
-                Assert.That(info.GetValue("Month", typeof(int)), Is.EqualTo(11));
-                Assert.That(info.GetValue("Year", typeof(int)), Is.EqualTo(2019));
+                info.GetValue("Day", typeof(int)).Should().Be(19);
+                info.GetValue("Month", typeof(int)).Should().Be(11);
+                info.GetValue("Year", typeof(int)).Should().Be(2019);
+            }                    
+        }
 
-                Assert.That(new Date(info, context), Is.EqualTo(date));
-            });
-            
+        [Fact]
+        public void CreateFromObjectData()
+        {
+            var converter = new FormatterConverter();
+            var info = new SerializationInfo(typeof(Date), converter);
+            var context = new StreamingContext();
+
+            info.AddValue("Day", 19);
+            info.AddValue("Month", 11);
+            info.AddValue("Year", 2019);
+            var date = new Date(info, context);
+
+            date.Should().Be(new Date(2019, 11, 19));
         }
 
     }

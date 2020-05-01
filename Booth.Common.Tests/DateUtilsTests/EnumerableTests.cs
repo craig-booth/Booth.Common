@@ -1,85 +1,168 @@
 ﻿using System;
 using System.Linq;
 
-using NUnit.Framework;
+using Xunit;
+using FluentAssertions;
 
 namespace Booth.Common.Tests.DateUtilsTests
 {
-    class EnumerableTests
+    public class EnumerableTests
     {
-        [TestCase]
-        public void DaysBetweenDatesTest()
+        [Fact]
+        public void DaysBetweenDates()
         {
             var startDate = new Date(2000, 02, 25);
             var endDate = new Date(2000, 03, 15);
 
             var days = DateUtils.Days(startDate, endDate).ToList();
 
-            Assert.That(days.First(), Is.EqualTo(startDate));
-            Assert.That(days, Has.Count.EqualTo(20).And.Unique.And.Ordered);
+            days.Should().Equal(new Date[]
+            {
+                new Date(2000, 02, 25),
+                new Date(2000, 02, 26),
+                new Date(2000, 02, 27),
+                new Date(2000, 02, 28),
+                new Date(2000, 02, 29),
+                new Date(2000, 03, 01),
+                new Date(2000, 03, 02),
+                new Date(2000, 03, 03),
+                new Date(2000, 03, 04),
+                new Date(2000, 03, 05),
+                new Date(2000, 03, 06),
+                new Date(2000, 03, 07),
+                new Date(2000, 03, 08),
+                new Date(2000, 03, 09),
+                new Date(2000, 03, 10),
+                new Date(2000, 03, 11),
+                new Date(2000, 03, 12),
+                new Date(2000, 03, 13),
+                new Date(2000, 03, 14),
+                new Date(2000, 03, 15)
+            });
         }
 
-        [TestCase]
-        public void DaysInRangeTest()
+        [Fact]
+        public void DaysInRange()
         {
             var startDate = new Date(2000, 02, 25);
             var endDate = new Date(2000, 03, 15);
 
             var days = DateUtils.Days(new DateRange(startDate, endDate)).ToList();
 
-            Assert.That(days.First(), Is.EqualTo(startDate));
-            Assert.That(days, Has.Count.EqualTo(20).And.Unique.And.Ordered);
+            days.Should().Equal(new Date[]
+            {
+                new Date(2000, 02, 25),
+                new Date(2000, 02, 26),
+                new Date(2000, 02, 27),
+                new Date(2000, 02, 28),
+                new Date(2000, 02, 29),
+                new Date(2000, 03, 01),
+                new Date(2000, 03, 02),
+                new Date(2000, 03, 03),
+                new Date(2000, 03, 04),
+                new Date(2000, 03, 05),
+                new Date(2000, 03, 06),
+                new Date(2000, 03, 07),
+                new Date(2000, 03, 08),
+                new Date(2000, 03, 09),
+                new Date(2000, 03, 10),
+                new Date(2000, 03, 11),
+                new Date(2000, 03, 12),
+                new Date(2000, 03, 13),
+                new Date(2000, 03, 14),
+                new Date(2000, 03, 15)
+             });
+
         }
 
-        [TestCase]
-        public void WeekEndingDaysBetweenDatesTest()
+        [Fact]
+        public void WeekEndingDaysBetweenDates()
         {
             var startDate = new Date(2000, 01, 01);
             var endDate = new Date(2000, 03, 31);
 
             var days = DateUtils.WeekEndingDays(startDate, endDate).ToList();
 
-            Assert.That(days.First(), Is.EqualTo(new Date(2000, 01, 02)));
-            Assert.That(days.Select(x => x.DayOfWeek), Has.All.EqualTo(DayOfWeek.Sunday));
-            Assert.That(days, Has.Count.EqualTo(13).And.Unique.And.Ordered);
+            days.Should().Equal(new Date[]
+            {
+                new Date(2000, 01, 02),
+                new Date(2000, 01, 09),
+                new Date(2000, 01, 16),
+                new Date(2000, 01, 23),
+                new Date(2000, 01, 30),
+                new Date(2000, 02, 06),
+                new Date(2000, 02, 13),
+                new Date(2000, 02, 20),
+                new Date(2000, 02, 27),
+                new Date(2000, 03, 05),
+                new Date(2000, 03, 12),
+                new Date(2000, 03, 19),
+                new Date(2000, 03, 26)
+            });
         }
 
-        [TestCase]
-        public void WeekEndingDaysBetweenDatesFirstDaySundayTest()
+        [Fact]
+        public void WeekEndingDaysBetweenDatesFirstDaySunday()
         {
             var startDate = new Date(2000, 01, 02);
             var endDate = new Date(2000, 03, 31);
 
             var days = DateUtils.WeekEndingDays(startDate, endDate).ToList();
 
-            Assert.That(days.First(), Is.EqualTo(new Date(2000, 01, 02)));
-            Assert.That(days.Select(x => x.DayOfWeek), Has.All.EqualTo(DayOfWeek.Sunday));
-            Assert.That(days, Has.Count.EqualTo(13).And.Unique.And.Ordered);
+            days.Should().Equal(new Date[]
+                        {
+                new Date(2000, 01, 02),
+                new Date(2000, 01, 09),
+                new Date(2000, 01, 16),
+                new Date(2000, 01, 23),
+                new Date(2000, 01, 30),
+                new Date(2000, 02, 06),
+                new Date(2000, 02, 13),
+                new Date(2000, 02, 20),
+                new Date(2000, 02, 27),
+                new Date(2000, 03, 05),
+                new Date(2000, 03, 12),
+                new Date(2000, 03, 19),
+                new Date(2000, 03, 26)
+                        });
         }
 
-        [TestCase]
-        public void WeekEndingDaysBetweenDatesLastDaySundayTest()
+        [Fact]
+        public void WeekEndingDaysBetweenDatesLastDaySunday()
         {
             var startDate = new Date(2000, 01, 01);
             var endDate = new Date(2000, 03, 26);
 
             var days = DateUtils.WeekEndingDays(startDate, endDate).ToList();
 
-            Assert.That(days.First(), Is.EqualTo(new Date(2000, 01, 02)));
-            Assert.That(days.Select(x => x.DayOfWeek), Has.All.EqualTo(DayOfWeek.Sunday));
-            Assert.That(days, Has.Count.EqualTo(13).And.Unique.And.Ordered);
+            days.Should().Equal(new Date[]
+                        {
+                new Date(2000, 01, 02),
+                new Date(2000, 01, 09),
+                new Date(2000, 01, 16),
+                new Date(2000, 01, 23),
+                new Date(2000, 01, 30),
+                new Date(2000, 02, 06),
+                new Date(2000, 02, 13),
+                new Date(2000, 02, 20),
+                new Date(2000, 02, 27),
+                new Date(2000, 03, 05),
+                new Date(2000, 03, 12),
+                new Date(2000, 03, 19),
+                new Date(2000, 03, 26)
+                        });
         }
 
-        [TestCase]
-        public void MonthEndingDaysBetweenDatesTest()
+        [Fact]
+        public void MonthEndingDaysBetweenDates()
         {
             var startDate = new Date(2000, 01, 01);
             var endDate = new Date(2000, 12, 01);
 
             var days = DateUtils.MonthEndingDays(startDate, endDate).ToList();
 
-            var expected = new Date[]
-                {
+            days.Should().Equal(new Date[]
+                        {
                     new Date(2000, 01, 31),
                     new Date(2000, 02, 29),
                     new Date(2000, 03, 31),
@@ -91,21 +174,19 @@ namespace Booth.Common.Tests.DateUtilsTests
                     new Date(2000, 09, 30),
                     new Date(2000, 10, 31),
                     new Date(2000, 11, 30)
-                };
-
-            Assert.That(days, Is.EqualTo(expected));
+                        });
         }
 
-        [TestCase]
-        public void MonthEndingDaysBetweenDatesFirstDateAtEndOfMonthTest()
+        [Fact]
+        public void MonthEndingDaysBetweenDatesFirstDateAtEndOfMonth()
         {
             var startDate = new Date(2000, 01, 31);
             var endDate = new Date(2000, 12, 01);
 
             var days = DateUtils.MonthEndingDays(startDate, endDate).ToList();
 
-            var expected = new Date[]
-                {
+            days.Should().Equal(new Date[]
+                        {
                     new Date(2000, 01, 31),
                     new Date(2000, 02, 29),
                     new Date(2000, 03, 31),
@@ -117,21 +198,19 @@ namespace Booth.Common.Tests.DateUtilsTests
                     new Date(2000, 09, 30),
                     new Date(2000, 10, 31),
                     new Date(2000, 11, 30)
-                };
-
-            Assert.That(days, Is.EqualTo(expected));
+                });
         }
 
-        [TestCase]
-        public void MonthEndingDaysBetweenDatesLastDateAtEndOfMonthTest()
+        [Fact]
+        public void MonthEndingDaysBetweenDatesLastDateAtEndOfMonth()
         {
             var startDate = new Date(2000, 01, 01);
             var endDate = new Date(2000, 12, 31);
 
             var days = DateUtils.MonthEndingDays(startDate, endDate).ToList();
 
-            var expected = new Date[]
-                {
+            days.Should().Equal(new Date[]
+                        {
                     new Date(2000, 01, 31),
                     new Date(2000, 02, 29),
                     new Date(2000, 03, 31),
@@ -144,9 +223,7 @@ namespace Booth.Common.Tests.DateUtilsTests
                     new Date(2000, 10, 31),
                     new Date(2000, 11, 30),
                     new Date(2000, 12, 31)
-                };
-
-            Assert.That(days, Is.EqualTo(expected));
+                });
         }
     }
 }

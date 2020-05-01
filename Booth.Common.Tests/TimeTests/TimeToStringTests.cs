@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Globalization;
 
-using NUnit.Framework;
+using Xunit;
+using FluentAssertions;
 
 namespace Booth.Common.Tests.TimeTests
 {
-    class TimeToStringTests
+    public class TimeToStringTests
     {
-        [TestCase]
-        public void ToStringProviderFormatTest()
+        [Fact]
+        public void ToStringProviderFormat()
         {
             var time = new Time(14, 02, 24);
             var dateTime = new DateTime(2019, 11, 19, 14, 02, 24);
@@ -16,27 +17,32 @@ namespace Booth.Common.Tests.TimeTests
             var format = @"hh\:mm\:ss";
             var provider = CultureInfo.CurrentCulture;
 
-            Assert.That(time.ToString(format, provider), Is.EqualTo(dateTime.ToString(format, provider)));
+            var result = time.ToString(format, provider);
+            
+            result.Should().Be(dateTime.ToString(format, provider));
         }
 
-        [TestCase]
-        public void ToStringFormatTest()
+        [Fact]
+        public void ToStringFormat()
         {
             var time = new Time(14, 02, 24);
             var dateTime = new DateTime(2019, 11, 19, 14, 02, 24);
 
             var format = @"hh\:mm\:ss";
+            var result = time.ToString(format);
 
-            Assert.That(time.ToString(format), Is.EqualTo(dateTime.ToString(format)));
+            result.Should().Be(dateTime.ToString(format));
         }
 
-        [TestCase]
-        public void ToStringTest()
+        [Fact]
+        public void TimeToString()
         {
             var time = new Time(14, 02, 24);
             var dateTime = new DateTime(2019, 11, 19, 14, 02, 24);
 
-            Assert.That(time.ToString(), Is.EqualTo("14:02:24"));
+            var result = time.ToString();
+
+            result.Should().Be("14:02:24");
         }
     }
 }

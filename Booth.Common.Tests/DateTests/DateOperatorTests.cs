@@ -2,105 +2,158 @@
 using System.Collections.Generic;
 using System.Text;
 
-using NUnit.Framework;
+using Xunit;
+using FluentAssertions;
+using FluentAssertions.Execution;
 
 namespace Booth.Common.Tests.DateTests
 {
-    class DateOperatorTests
+    public class DateOperatorTests
     {
 
-        [TestCase]
-        public void AddTimeSpanTest()
+        [Fact]
+        public void AddTimeSpan()
         {
             var date = new Date(2019, 11, 04);
+
             var newDate = date + new TimeSpan(0, 26, 3, 0, 0);
 
-            Assert.That(newDate, Is.EqualTo(new Date(2019, 11, 05)));
+            newDate.Should().Be(new Date(2019, 11, 05));
         }
 
 
-        [TestCase]
-        public void SubtractTimeSpanTest()
+        [Fact]
+        public void SubtractTimeSpan()
         {
             var date = new Date(2019, 11, 04);
+
             var newDate = date - new TimeSpan(0, 26, 3, 0, 0);
 
-            Assert.That(newDate, Is.EqualTo(new Date(2019, 11, 02)));
+            newDate.Should().Be(new Date(2019, 11, 02));
         }
 
-        [TestCase]
-        public void SubtractDateTest()
+        [Fact]
+        public void SubtractDate()
         {
             var date = new Date(2019, 11, 04);
-            var newDate = date - new Date(2019, 11, 30);
 
-            Assert.That(newDate, Is.EqualTo(new TimeSpan(-26, 0, 0, 0)));
+            var timeSpan = date - new Date(2019, 11, 30);
+
+            timeSpan.Should().Be(new TimeSpan(-26, 0, 0, 0));
         }
 
-        [TestCase]
-        public void EqualTest()
+        [Fact]
+        public void Equal()
         {
-            Assert.Multiple(() =>
+            var date = new Date(2019, 11, 18);
+
+            bool result;
+            using (new AssertionScope())
             {
-                Assert.That(new Date(2019, 11, 18) == (new Date(2019, 11, 01)), Is.False);
-                Assert.That(new Date(2019, 11, 18) == (new Date(2019, 11, 18)), Is.True);
-                Assert.That(new Date(2019, 11, 18) == (new Date(2019, 11, 22)), Is.False);
-            });
+                result = date == new Date(2019, 11, 01);
+                result.Should().BeFalse("date being compared is less than given date");
+
+                result = date == new Date(2019, 11, 18);
+                result.Should().BeTrue("date being compared is equal to given date");
+
+                result = date == new Date(2019, 11, 22);
+                result.Should().BeFalse("date being compared is greater than given date");
+            };
         }
 
-        [TestCase]
-        public void NotEqualTest()
+        [Fact]
+        public void NotEqual()
         {
-            Assert.Multiple(() =>
+            var date = new Date(2019, 11, 18);
+
+            bool result;
+            using (new AssertionScope())
             {
-                Assert.That(new Date(2019, 11, 18) != (new Date(2019, 11, 01)), Is.True);
-                Assert.That(new Date(2019, 11, 18) != (new Date(2019, 11, 18)), Is.False);
-                Assert.That(new Date(2019, 11, 18) != (new Date(2019, 11, 22)), Is.True);
-            });
+                result = date != new Date(2019, 11, 01);
+                result.Should().BeTrue("date being compared is less than given date");
+
+                result = date != new Date(2019, 11, 18);
+                result.Should().BeFalse("date being compared is equal to given date");
+
+                result = date != new Date(2019, 11, 22);
+                result.Should().BeTrue("date being compared is greater than given date");
+            };
         }
 
-        [TestCase]
-        public void LessThanTest()
+        [Fact]
+        public void LessThan()
         {
-            Assert.Multiple(() =>
+            var date = new Date(2019, 11, 18);
+
+            bool result;
+            using (new AssertionScope())
             {
-                Assert.That(new Date(2019, 11, 18) < (new Date(2019, 11, 01)), Is.False);
-                Assert.That(new Date(2019, 11, 18) < (new Date(2019, 11, 18)), Is.False);
-                Assert.That(new Date(2019, 11, 18) < (new Date(2019, 11, 22)), Is.True);
-            });
+                result = date < new Date(2019, 11, 01);
+                result.Should().BeFalse("date being compared is less than given date");
+
+                result = date < new Date(2019, 11, 18);
+                result.Should().BeFalse("date being compared is equal to given date");
+
+                result = date < new Date(2019, 11, 22);
+                result.Should().BeTrue("date being compared is greater than given date");
+            };
         }
 
-        [TestCase]
-        public void GreaterThanTest()
+        [Fact]
+        public void GreaterThan()
         {
-            Assert.Multiple(() =>
+            var date = new Date(2019, 11, 18);
+
+            bool result;
+            using (new AssertionScope())
             {
-                Assert.That(new Date(2019, 11, 18) > (new Date(2019, 11, 01)), Is.True);
-                Assert.That(new Date(2019, 11, 18) > (new Date(2019, 11, 18)), Is.False);
-                Assert.That(new Date(2019, 11, 18) > (new Date(2019, 11, 22)), Is.False);
-            });
+                result = date > new Date(2019, 11, 01);
+                result.Should().BeTrue("date being compared is less than given date");
+
+                result = date > new Date(2019, 11, 18);
+                result.Should().BeFalse("date being compared is equal to given date");
+
+                result = date > new Date(2019, 11, 22);
+                result.Should().BeFalse("date being compared is greater than given date");
+            };
         }
 
-        [TestCase]
-        public void LessThanEqualTest()
+        [Fact]
+        public void LessThanEqual()
         {
-            Assert.Multiple(() =>
+            var date = new Date(2019, 11, 18);
+
+            bool result;
+            using (new AssertionScope())
             {
-                Assert.That(new Date(2019, 11, 18) <= (new Date(2019, 11, 01)), Is.False);
-                Assert.That(new Date(2019, 11, 18) <= (new Date(2019, 11, 18)), Is.True);
-                Assert.That(new Date(2019, 11, 18) <= (new Date(2019, 11, 22)), Is.True);
-            });
+                result = date <= new Date(2019, 11, 01);
+                result.Should().BeFalse("date being compared is less than given date");
+
+                result = date <= new Date(2019, 11, 18);
+                result.Should().BeTrue("date being compared is equal to given date");
+
+                result = date <= new Date(2019, 11, 22);
+                result.Should().BeTrue("date being compared is greater than given date");
+            };
         }
 
-        [TestCase]
-        public void GreaterThanEqualTest()
+        [Fact]
+        public void GreaterThanEqual()
         {
-            Assert.Multiple(() =>
+            var date = new Date(2019, 11, 18);
+
+            bool result;
+            using (new AssertionScope())
             {
-                Assert.That(new Date(2019, 11, 18) >= (new Date(2019, 11, 01)), Is.True);
-                Assert.That(new Date(2019, 11, 18) >= (new Date(2019, 11, 18)), Is.True);
-                Assert.That(new Date(2019, 11, 18) >= (new Date(2019, 11, 22)), Is.False);
-            });
+                result = (date >= new Date(2019, 11, 01));
+                result.Should().BeTrue("date being compared is less than given date");
+
+                result = (date >= new Date(2019, 11, 18));
+                result.Should().BeTrue("date being compared is equal to given date");
+
+                result = (date >= new Date(2019, 11, 22));
+                result.Should().BeFalse("date being compared is greater than given date");
+            };
         }
     }
 }

@@ -2,120 +2,176 @@
 using System.Collections.Generic;
 using System.Text;
 
-using NUnit.Framework;
+using Xunit;
+using FluentAssertions;
+using FluentAssertions.Execution;
 
 namespace Booth.Common.Tests.TimeTests
 {
-    class TimeOperatorTests
+    public class TimeOperatorTests
     {
 
-        [TestCase]
-        public void AddTimeSpanTest()
+        [Fact]
+        public void AddTimeSpan()
         {
             var time = new Time(14, 02, 24);
             var newTime = time + new TimeSpan(2, 4, 24);
 
-            Assert.That(newTime, Is.EqualTo(new Time(16, 06, 48)));
+            newTime.Should().Be(new Time(16, 06, 48));
         }
 
-        [TestCase]
-        public void AddTimeSpanOverflowTest()
+        [Fact]
+        public void AddTimeSpanOverflow()
         {
             var time = new Time(14, 02, 24);
 
-            Assert.That(() => time + new TimeSpan(10, 4, 24), Throws.InstanceOf(typeof(OverflowException)));
+            Action a = () => {var newTime = time + new TimeSpan(10, 4, 24); };
+
+            a.Should().ThrowExactly<OverflowException>();
         }
 
-        [TestCase]
-        public void SubtractTimeSpanTest()
+        [Fact]
+        public void SubtractTimeSpan()
         {
             var time = new Time(14, 02, 24);
+
             var newTime = time - new TimeSpan(2, 4, 24);
 
-            Assert.That(newTime, Is.EqualTo(new Time(11, 58, 00)));
+            newTime.Should().Be(new Time(11, 58, 00));
         }
 
-        [TestCase]
-        public void SubtractTimeSpanOverflowTest()
+        [Fact]
+        public void SubtractTimeSpanOverflow()
         {
             var time = new Time(14, 02, 24);
 
-            Assert.That(() => time - new TimeSpan(22, 4, 24), Throws.InstanceOf(typeof(OverflowException)));
+            Action a = () => { var newTime = time - new TimeSpan(22, 4, 24); };
+
+            a.Should().ThrowExactly<OverflowException>();
         }
 
-        [TestCase]
-        public void SubtractTimeTest()
+        [Fact]
+        public void SubtractTime()
         {
             var time = new Time(14, 02, 24);
+
             var ts = time - new Time(08, 22, 34);
 
-            Assert.That(ts, Is.EqualTo(new TimeSpan(5, 39, 50)));
+            ts.Should().Be(new TimeSpan(5, 39, 50));
         }
 
-        [TestCase]
-        public void EqualTest()
+        [Fact]
+        public void Equal()
         {
-            Assert.Multiple(() =>
+            var time = new Time(14, 02, 24);
+
+            bool result;
+            using (new AssertionScope())
             {
-                Assert.That(new Time(14, 02, 24) == new Time(11, 02, 06), Is.False);
-                Assert.That(new Time(14, 02, 24) == new Time(14, 02, 24), Is.True);
-                Assert.That(new Time(14, 02, 24) == new Time(14, 45, 22), Is.False);
-            });
+                result = time == new Time(11, 02, 06);
+                result.Should().BeFalse("time being compared is less than given time");
+
+                result = time == new Time(14, 02, 24);
+                result.Should().BeTrue("time being compared is equal to given time");
+
+                result = time == new Time(14, 45, 22);
+                result.Should().BeFalse("time being compared is greater than given time");
+            };
         }
 
-        [TestCase]
-        public void NotEqualTest()
+        [Fact]
+        public void NotEqual()
         {
-            Assert.Multiple(() =>
+            var time = new Time(14, 02, 24);
+
+            bool result;
+            using (new AssertionScope())
             {
-                Assert.That(new Time(14, 02, 24) != new Time(11, 02, 06), Is.True);
-                Assert.That(new Time(14, 02, 24) != new Time(14, 02, 24), Is.False);
-                Assert.That(new Time(14, 02, 24) != new Time(14, 45, 22), Is.True);
-            });
+                result = time != new Time(11, 02, 06);
+                result.Should().BeTrue("time being compared is less than given time");
+
+                result = time != new Time(14, 02, 24);
+                result.Should().BeFalse("time being compared is equal to given time");
+
+                result = time != new Time(14, 45, 22);
+                result.Should().BeTrue("time being compared is greater than given time");
+            };
         }
 
-        [TestCase]
-        public void LessThanTest()
+        [Fact]
+        public void LessThan()
         {
-            Assert.Multiple(() =>
+            var time = new Time(14, 02, 24);
+
+            bool result;
+            using (new AssertionScope())
             {
-                Assert.That(new Time(14, 02, 24) < new Time(11, 02, 06), Is.False);
-                Assert.That(new Time(14, 02, 24) < new Time(14, 02, 24), Is.False);
-                Assert.That(new Time(14, 02, 24) < new Time(14, 45, 22), Is.True);
-            });
+                result = time < new Time(11, 02, 06);
+                result.Should().BeFalse("time being compared is less than given time");
+
+                result = time < new Time(14, 02, 24);
+                result.Should().BeFalse("time being compared is equal to given time");
+
+                result = time < new Time(14, 45, 22);
+                result.Should().BeTrue("time being compared is greater than given time");
+            };
         }
 
-        [TestCase]
-        public void GreaterThanTest()
+        [Fact]
+        public void GreaterThan()
         {
-            Assert.Multiple(() =>
+            var time = new Time(14, 02, 24);
+
+            bool result;
+            using (new AssertionScope())
             {
-                Assert.That(new Time(14, 02, 24) > new Time(11, 02, 06), Is.True);
-                Assert.That(new Time(14, 02, 24) > new Time(14, 02, 24), Is.False);
-                Assert.That(new Time(14, 02, 24) > new Time(14, 45, 22), Is.False);
-            });
+                result = time > new Time(11, 02, 06);
+                result.Should().BeTrue("time being compared is less than given time");
+
+                result = time > new Time(14, 02, 24);
+                result.Should().BeFalse("time being compared is equal to given time");
+
+                result = time > new Time(14, 45, 22);
+                result.Should().BeFalse("time being compared is greater than given time");
+            };
         }
 
-        [TestCase]
-        public void LessThanEqualTest()
+        [Fact]
+        public void LessThanEqual()
         {
-            Assert.Multiple(() =>
+            var time = new Time(14, 02, 24);
+
+            bool result;
+            using (new AssertionScope())
             {
-                Assert.That(new Time(14, 02, 24) <= new Time(11, 02, 06), Is.False);
-                Assert.That(new Time(14, 02, 24) <= new Time(14, 02, 24), Is.True);
-                Assert.That(new Time(14, 02, 24) <= new Time(14, 45, 22), Is.True);
-            });
+                result = time <= new Time(11, 02, 06);
+                result.Should().BeFalse("time being compared is less than given time");
+
+                result = time <= new Time(14, 02, 24);
+                result.Should().BeTrue("time being compared is equal to given time");
+
+                result = time <= new Time(14, 45, 22);
+                result.Should().BeTrue("time being compared is greater than given time");
+            };
         }
 
-        [TestCase]
-        public void GreaterThanEqualTest()
+        [Fact]
+        public void GreaterThanEqual()
         {
-            Assert.Multiple(() =>
+            var time = new Time(14, 02, 24);
+
+            bool result;
+            using (new AssertionScope())
             {
-                Assert.That(new Time(14, 02, 24) >= new Time(11, 02, 06), Is.True);
-                Assert.That(new Time(14, 02, 24) >= new Time(14, 02, 24), Is.True);
-                Assert.That(new Time(14, 02, 24) >= new Time(14, 45, 22), Is.False);
-            });
+                result = time >= new Time(11, 02, 06);
+                result.Should().BeTrue("time being compared is less than given time");
+
+                result = time >= new Time(14, 02, 24);
+                result.Should().BeTrue("time being compared is equal to given time");
+
+                result = time >= new Time(14, 45, 22);
+                result.Should().BeFalse("time being compared is greater than given time");
+            };
         }
     }
 }

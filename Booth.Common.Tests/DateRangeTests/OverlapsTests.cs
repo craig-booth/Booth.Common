@@ -1,120 +1,133 @@
 ﻿using System;
-using NUnit.Framework;
+
+using Xunit;
+using FluentAssertions;
 
 using Booth.Common;
 
 namespace Booth.Common.Tests.DateRangeTests
 {
-    class OverlapsTests
+    public class OverlapsTests
     {
-        [TestCase]
+        [Fact]
         public void WhollyBefore()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
-
             var testRange = new DateRange(new Date(1999, 01, 01), new Date(1999, 07, 01));
 
-            Assert.That(testRange.Overlaps(dateRange), Is.Not.True);
+            var result = testRange.Overlaps(dateRange);
+
+            result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void BeforeWithEndDateMatchingStartDate()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
-
             var testRange = new DateRange(new Date(1999, 01, 01), new Date(2000, 01, 01));
 
-            Assert.That(testRange.Overlaps(dateRange), Is.True);
+            var result = testRange.Overlaps(dateRange);
+
+            result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void PartiallyBefore()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
-
             var testRange = new DateRange(new Date(1999, 01, 01), new Date(2000, 01, 12));
 
-            Assert.That(testRange.Overlaps(dateRange), Is.True);
+            var result = testRange.Overlaps(dateRange);
+
+            result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void WithinWithMatchingStartDate()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
-
             var testRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 12));
 
-            Assert.That(testRange.Overlaps(dateRange), Is.True);
+            var result = testRange.Overlaps(dateRange);
+
+            result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void WhollyWithin()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
-
             var testRange = new DateRange(new Date(2000, 01, 05), new Date(2000, 01, 12));
 
-            Assert.That(testRange.Overlaps(dateRange), Is.True);
+            var result = testRange.Overlaps(dateRange);
+
+            result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void WithinWithMatchingEndDate()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
-
             var testRange = new DateRange(new Date(2000, 01, 05), new Date(2000, 01, 31));
 
-            Assert.That(testRange.Overlaps(dateRange), Is.True);
+            var result = testRange.Overlaps(dateRange);
+
+            result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void PartiallyAfter()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
-
             var testRange = new DateRange(new Date(2000, 01, 05), new Date(2000, 03, 01));
 
-            Assert.That(testRange.Overlaps(dateRange), Is.True);
+            var result = testRange.Overlaps(dateRange);
+
+            result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void AfterWithStartDateMatchingEndDate()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
-
             var testRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 03, 01));
 
-            Assert.That(testRange.Overlaps(dateRange), Is.True);
+            var result = testRange.Overlaps(dateRange);
+
+            result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void WhollyAfter()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
-
             var testRange = new DateRange(new Date(2000, 02, 15), new Date(2000, 03, 01));
 
-            Assert.That(testRange.Overlaps(dateRange), Is.Not.True);
+            var result = testRange.Overlaps(dateRange);
+
+            result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void WhollyOverlaps()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
-
             var testRange = new DateRange(new Date(1999, 07, 30), new Date(2000, 03, 01));
 
-            Assert.That(testRange.Overlaps(dateRange), Is.True);
+            var result = testRange.Overlaps(dateRange);
+
+            result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void Same()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
-
             var testRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-            Assert.That(testRange.Overlaps(dateRange), Is.True);
+            var result = testRange.Overlaps(dateRange);
+
+            result.Should().BeTrue();
         }
 
     }
