@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 
 namespace Booth.Common.Tests.DateUtilsTests
 {
-    class EnumerableTests
+    public class EnumerableTests
     {
-        [TestCase]
+        [Fact]
         public void DaysBetweenDates()
         {
             var startDate = new Date(2000, 02, 25);
@@ -41,7 +41,7 @@ namespace Booth.Common.Tests.DateUtilsTests
             });
         }
 
-        [TestCase]
+        [Fact]
         public void DaysInRange()
         {
             var startDate = new Date(2000, 02, 25);
@@ -75,7 +75,7 @@ namespace Booth.Common.Tests.DateUtilsTests
 
         }
 
-        [TestCase]
+        [Fact]
         public void WeekEndingDaysBetweenDates()
         {
             var startDate = new Date(2000, 01, 01);
@@ -101,7 +101,7 @@ namespace Booth.Common.Tests.DateUtilsTests
             });
         }
 
-        [TestCase]
+        [Fact]
         public void WeekEndingDaysBetweenDatesFirstDaySunday()
         {
             var startDate = new Date(2000, 01, 02);
@@ -127,7 +127,7 @@ namespace Booth.Common.Tests.DateUtilsTests
                         });
         }
 
-        [TestCase]
+        [Fact]
         public void WeekEndingDaysBetweenDatesLastDaySunday()
         {
             var startDate = new Date(2000, 01, 01);
@@ -153,7 +153,7 @@ namespace Booth.Common.Tests.DateUtilsTests
                         });
         }
 
-        [TestCase]
+        [Fact]
         public void MonthEndingDaysBetweenDates()
         {
             var startDate = new Date(2000, 01, 01);
@@ -177,7 +177,7 @@ namespace Booth.Common.Tests.DateUtilsTests
                         });
         }
 
-        [TestCase]
+        [Fact]
         public void MonthEndingDaysBetweenDatesFirstDateAtEndOfMonth()
         {
             var startDate = new Date(2000, 01, 31);
@@ -201,7 +201,7 @@ namespace Booth.Common.Tests.DateUtilsTests
                 });
         }
 
-        [TestCase]
+        [Fact]
         public void MonthEndingDaysBetweenDatesLastDateAtEndOfMonth()
         {
             var startDate = new Date(2000, 01, 01);

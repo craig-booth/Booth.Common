@@ -1,13 +1,13 @@
 ﻿using System;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 
 namespace Booth.Common.Tests.DateRangeTests
 {
-    class GeneralTests
+    public class GeneralTests
     {
-        [TestCase]
+        [Fact]
         public void Create()
         {
             var fromDate = new Date(2000, 01, 01);
@@ -18,7 +18,7 @@ namespace Booth.Common.Tests.DateRangeTests
             dateRange.Should().BeEquivalentTo(new { FromDate = fromDate, ToDate = toDate });
         }
 
-        [TestCase]
+        [Fact]
         public void FromDateAfterToDate()
         {
             var fromDate = new Date(2000, 01, 01);

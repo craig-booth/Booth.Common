@@ -2,36 +2,36 @@
 using System.Collections.Generic;
 using System.Text;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 using FluentAssertions.Execution;
 
 namespace Booth.Common.Tests.DateTests
 {
-    class DateComparisonTests
+    public class DateComparisonTests
     {
-        [TestCase]
+        [Fact]
         public void CompareDate1LessThanDate2()
         {
             var result = Date.Compare(new Date(2019, 11, 18), new Date(2019, 11, 01));
             result.Should().BePositive();
         }
 
-        [TestCase]
+        [Fact]
         public void CompareDate1EqualToDate2()
         {
             var result = Date.Compare(new Date(2019, 11, 18), new Date(2019, 11, 18));
             result.Should().Be(0);
         }
 
-        [TestCase]
+        [Fact]
         public void CompareDate1GreaterThanDate2()
         {
             var result = Date.Compare(new Date(2019, 11, 18), new Date(2019, 11, 22));
             result.Should().BeNegative();
         }
 
-        [TestCase]
+        [Fact]
         public void CompareToDateLessThanThisDate()
         {
             var date = new Date(2019, 11, 18);
@@ -41,7 +41,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BePositive();
         }
 
-        [TestCase]
+        [Fact]
         public void CompareToDateEqualToThisDate()
         {
             var date = new Date(2019, 11, 18);
@@ -51,7 +51,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().Be(0);
         }
 
-        [TestCase]
+        [Fact]
         public void CompareToDateGreaterThanThisDate()
         {
             var date = new Date(2019, 11, 18);
@@ -62,7 +62,7 @@ namespace Booth.Common.Tests.DateTests
         }
 
 
-        [TestCase]
+        [Fact]
         public void CompareToNullObject()
         {
             var date = new Date(2019, 11, 18);
@@ -72,7 +72,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().Be(1);
         }
 
-        [TestCase]
+        [Fact]
         public void CompareToDateObject()
         {
             var date = new Date(2019, 11, 18);
@@ -82,7 +82,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().Be(0);
         }
 
-        [TestCase]
+        [Fact]
         public void CompareToDateTimeObject()
         {
             var date = new Date(2019, 11, 18);
@@ -92,7 +92,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().Be(0);
         }
 
-        [TestCase]
+        [Fact]
         public void CompareToInteger()
         {
             var date = new Date(2019, 11, 18);
@@ -102,7 +102,7 @@ namespace Booth.Common.Tests.DateTests
             a.Should().ThrowExactly<ArgumentException>();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsDateLessThanThisDate()
         {
             var date = new Date(2019, 11, 18);
@@ -112,7 +112,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsDateEqualThisDate()
         {
             var date = new Date(2019, 11, 18);
@@ -122,7 +122,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsDateGreaterThanThisDate()
         {
             var date = new Date(2019, 11, 18);
@@ -132,7 +132,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsObjectNull()
         {
             var date = new Date(2019, 11, 18);
@@ -142,7 +142,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsObjectDate()
         {
             var date = new Date(2019, 11, 18);
@@ -153,7 +153,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsObjectDateTimeSameDateWithTimeComponent()
         {
             var date = new Date(2019, 11, 18);
@@ -163,7 +163,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsObjectDateTimeSameDateWithoutTimeComponent()
         {
             var date = new Date(2019, 11, 18);
@@ -173,7 +173,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsObjectDateTimeDifferentDateWithTimeComponent()
         {
             var date = new Date(2019, 11, 18);
@@ -183,7 +183,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsObjectDateTimeDifferentDateWithoutTimeComponent()
         {
             var date = new Date(2019, 11, 18);
@@ -193,7 +193,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsObjectString()
         {
             var date = new Date(2019, 11, 18);
@@ -203,7 +203,7 @@ namespace Booth.Common.Tests.DateTests
             a.Should().ThrowExactly<ArgumentException>();
         }
 
-        [TestCase]
+        [Fact]
         public void StaticEqualsDate1LessThanDate2()
         {
             var result = Date.Equals(new Date(2019, 11, 18), new Date(2019, 11, 01));
@@ -211,7 +211,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void StaticEqualsDate1LessEqualDate2()
         {
             var result = Date.Equals(new Date(2019, 11, 18), new Date(2019, 11, 18));
@@ -219,7 +219,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void StaticEqualsDate1GreaterThanDate2()
         {
             var result = Date.Equals(new Date(2019, 11, 18), new Date(2019, 11, 22));
@@ -227,7 +227,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void DateGetHashCode()
         {
             var date = new Date(2019, 11, 18);

@@ -2,14 +2,14 @@
 using System.Globalization;
 using System.Threading;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 
 namespace Booth.Common.Tests.DateRangeTests
 {
-    class ToStringTests
+    public class ToStringTests
     {
-        [TestCase]
+        [Fact]
         public void ToStringCorrect()
         {
             // For the test ensure that the date format is in Australian format

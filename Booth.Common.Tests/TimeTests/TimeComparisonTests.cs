@@ -1,13 +1,13 @@
 ﻿using System;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 
 namespace Booth.Common.Tests.TimeTests
 {
-    class TimeComparisonTests
+    public class TimeComparisonTests
     {
-        [TestCase]
+        [Fact]
         public void CompareTime1LessThanTime2()
         {
             var result = Time.Compare(new Time(14, 02, 24), new Time(11, 02, 06));
@@ -15,7 +15,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().BePositive();
         }
 
-        [TestCase]
+        [Fact]
         public void CompareTime1EqualToTime2()
         {
             var result = Time.Compare(new Time(14, 02, 24), new Time(14, 02, 24));
@@ -23,7 +23,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().Be(0);
         }
 
-        [TestCase]
+        [Fact]
         public void CompareTime1GreaterThanTime2()
         {
             var result = Time.Compare(new Time(14, 02, 24), new Time(14, 45, 22));
@@ -31,7 +31,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().BeNegative();
         }
 
-        [TestCase]
+        [Fact]
         public void CompareToTimeLessThanThisTime()
         {
             var time = new Time(14, 02, 24);
@@ -41,7 +41,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().BePositive();
         }
 
-        [TestCase]
+        [Fact]
         public void CompareToTimeEqualToThisTime()
         {
             var time = new Time(14, 02, 24);
@@ -51,7 +51,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().Be(0);
         }
 
-        [TestCase]
+        [Fact]
         public void CompareToTimeGreaterThanThisTime()
         {
             var time = new Time(14, 02, 24);
@@ -62,7 +62,7 @@ namespace Booth.Common.Tests.TimeTests
         }
 
 
-        [TestCase]
+        [Fact]
         public void CompareToNullObject()
         {
             var time = new Time(14, 02, 24);
@@ -72,7 +72,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().BePositive();
         }
 
-        [TestCase]
+        [Fact]
         public void CompareToInteger()
         {
             var time = new Time(14, 02, 24);
@@ -82,7 +82,7 @@ namespace Booth.Common.Tests.TimeTests
             a.Should().ThrowExactly<ArgumentException>();
         }
 
-        [TestCase]
+        [Fact]
         public void CompareToTimeSpanObject()
         {
             var time = new Time(14, 02, 24);
@@ -93,7 +93,7 @@ namespace Booth.Common.Tests.TimeTests
         }
 
 
-        [TestCase]
+        [Fact]
         public void EqualsTimeLessThanThisTime()
         {
             var time = new Time(14, 02, 24);
@@ -103,7 +103,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsTimeEqualToThisTime()
         {
             var time = new Time(14, 02, 24);
@@ -113,7 +113,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsTimeGreaterThanThisTime()
         {
             var time = new Time(14, 02, 24);
@@ -123,7 +123,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualsObjectString()
         {
             var time = new Time(14, 02, 24);
@@ -133,7 +133,7 @@ namespace Booth.Common.Tests.TimeTests
             a.Should().ThrowExactly<ArgumentException>();
         }
 
-        [TestCase]
+        [Fact]
         public void StaticEqualsTime1LessThanTime2()
         {
             var result = Time.Equals(new Time(14, 02, 24), new Time(11, 02, 06));
@@ -141,7 +141,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void StaticEqualsTime1EqualToTime2()
         {
             var result = Time.Equals(new Time(14, 02, 24), new Time(14, 02, 24));
@@ -149,7 +149,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void StaticEqualsTime1GreaterThanTime2()
         {
             var result = Time.Equals(new Time(14, 02, 24), new Time(14, 45, 22));
@@ -157,7 +157,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void TimeGetHashCode()
         {
             var time = new Time(14, 02, 24);

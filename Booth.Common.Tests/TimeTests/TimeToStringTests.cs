@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Globalization;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 
 namespace Booth.Common.Tests.TimeTests
 {
-    class TimeToStringTests
+    public class TimeToStringTests
     {
-        [TestCase]
+        [Fact]
         public void ToStringProviderFormat()
         {
             var time = new Time(14, 02, 24);
@@ -22,7 +22,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().Be(dateTime.ToString(format, provider));
         }
 
-        [TestCase]
+        [Fact]
         public void ToStringFormat()
         {
             var time = new Time(14, 02, 24);
@@ -34,7 +34,7 @@ namespace Booth.Common.Tests.TimeTests
             result.Should().Be(dateTime.ToString(format));
         }
 
-        [TestCase]
+        [Fact]
         public void TimeToString()
         {
             var time = new Time(14, 02, 24);

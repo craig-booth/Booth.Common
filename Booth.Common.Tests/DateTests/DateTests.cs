@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 using FluentAssertions.Execution;
 
 namespace Booth.Common.Tests.DateTests
 {
-    class DateTests
+    public class DateTests
     {
-        [TestCase]
+        [Fact]
         public void Today()
         {
             var today = Date.Today;
@@ -19,7 +19,7 @@ namespace Booth.Common.Tests.DateTests
             today.Should().BeEquivalentTo(DateTime.Today.Date);
         }
 
-        [TestCase]
+        [Fact]
         public void Day()
         {
             var date = new Date(2019, 11, 04);
@@ -27,7 +27,7 @@ namespace Booth.Common.Tests.DateTests
             date.Day.Should().Be(4);
         }
 
-        [TestCase]
+        [Fact]
         public void Month()
         {
             var date = new Date(2019, 11, 04);
@@ -35,7 +35,7 @@ namespace Booth.Common.Tests.DateTests
             date.Month.Should().Be(11);
         }
 
-        [TestCase]
+        [Fact]
         public void Year()
         {
             var date = new Date(2019, 11, 04);
@@ -43,7 +43,7 @@ namespace Booth.Common.Tests.DateTests
             date.Year.Should().Be(2019);
         }
 
-        [TestCase]
+        [Fact]
         public void DateDayOfWeek()
         {
             var date = new Date(2019, 11, 04);
@@ -51,7 +51,7 @@ namespace Booth.Common.Tests.DateTests
             date.DayOfWeek.Should().Be(DayOfWeek.Monday);
         }
 
-        [TestCase]
+        [Fact]
         public void DayOfYear()
         {
             var date = new Date(2019, 11, 04);
@@ -61,7 +61,7 @@ namespace Booth.Common.Tests.DateTests
 
 
 
-        [TestCase]
+        [Fact]
         public void AddTimeSpan()
         {
             var date = new Date(2019, 11, 04);
@@ -70,7 +70,7 @@ namespace Booth.Common.Tests.DateTests
             newDate.Should().Be(new Date(2019, 11, 05));
         }
 
-        [TestCase]
+        [Fact]
         public void AddDays()
         {
             var date = new Date(2019, 11, 04);
@@ -79,7 +79,7 @@ namespace Booth.Common.Tests.DateTests
             newDate.Should().Be(new Date(2019, 12, 19));
         }
 
-        [TestCase]
+        [Fact]
         public void AddMonths()
         {
             var date = new Date(2019, 11, 04);
@@ -88,7 +88,7 @@ namespace Booth.Common.Tests.DateTests
             newDate.Should().Be(new Date(2020, 03, 04));
         }
 
-        [TestCase]
+        [Fact]
         public void AddYears()
         {
             var date = new Date(2019, 11, 04);
@@ -98,7 +98,7 @@ namespace Booth.Common.Tests.DateTests
         }
 
 
-        [TestCase]
+        [Fact]
         public void SubtractTimeSpan()
         {
             var date = new Date(2019, 11, 04);
@@ -107,7 +107,7 @@ namespace Booth.Common.Tests.DateTests
             newDate.Should().Be(new Date(2019, 11, 02));
         }
 
-        [TestCase]
+        [Fact]
         public void SubtractDate()
         {
             var date = new Date(2019, 11, 04);
@@ -116,7 +116,7 @@ namespace Booth.Common.Tests.DateTests
             timeSpan.Should().Be(new TimeSpan(-26, 0, 0, 0));
         }            
 
-        [TestCase]
+        [Fact]
         public void GetObjectData()
         {
             var date = new Date(2019, 11, 19);
@@ -133,7 +133,7 @@ namespace Booth.Common.Tests.DateTests
             }                    
         }
 
-        [TestCase]
+        [Fact]
         public void CreateFromObjectData()
         {
             var converter = new FormatterConverter();

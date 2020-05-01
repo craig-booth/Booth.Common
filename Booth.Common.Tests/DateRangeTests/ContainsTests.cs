@@ -1,15 +1,15 @@
 ﻿using System;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 
 using Booth.Common;
 
 namespace Booth.Common.Tests.DateRangeTests
 {
-    class ContainsTests
+    public class ContainsTests
     {
-        [TestCase]
+        [Fact]
         public void BeforeRange()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -20,7 +20,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void FirstDayOfRange()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -31,7 +31,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void InRange()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -42,7 +42,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void LastDayOfRange()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -53,7 +53,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void AfterRange()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));

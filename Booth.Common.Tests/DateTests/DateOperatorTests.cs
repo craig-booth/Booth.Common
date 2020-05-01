@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 using FluentAssertions.Execution;
 
 namespace Booth.Common.Tests.DateTests
 {
-    class DateOperatorTests
+    public class DateOperatorTests
     {
 
-        [TestCase]
+        [Fact]
         public void AddTimeSpan()
         {
             var date = new Date(2019, 11, 04);
@@ -22,7 +22,7 @@ namespace Booth.Common.Tests.DateTests
         }
 
 
-        [TestCase]
+        [Fact]
         public void SubtractTimeSpan()
         {
             var date = new Date(2019, 11, 04);
@@ -32,7 +32,7 @@ namespace Booth.Common.Tests.DateTests
             newDate.Should().Be(new Date(2019, 11, 02));
         }
 
-        [TestCase]
+        [Fact]
         public void SubtractDate()
         {
             var date = new Date(2019, 11, 04);
@@ -42,7 +42,7 @@ namespace Booth.Common.Tests.DateTests
             timeSpan.Should().Be(new TimeSpan(-26, 0, 0, 0));
         }
 
-        [TestCase]
+        [Fact]
         public void Equal()
         {
             var date = new Date(2019, 11, 18);
@@ -61,7 +61,7 @@ namespace Booth.Common.Tests.DateTests
             };
         }
 
-        [TestCase]
+        [Fact]
         public void NotEqual()
         {
             var date = new Date(2019, 11, 18);
@@ -80,7 +80,7 @@ namespace Booth.Common.Tests.DateTests
             };
         }
 
-        [TestCase]
+        [Fact]
         public void LessThan()
         {
             var date = new Date(2019, 11, 18);
@@ -99,7 +99,7 @@ namespace Booth.Common.Tests.DateTests
             };
         }
 
-        [TestCase]
+        [Fact]
         public void GreaterThan()
         {
             var date = new Date(2019, 11, 18);
@@ -118,7 +118,7 @@ namespace Booth.Common.Tests.DateTests
             };
         }
 
-        [TestCase]
+        [Fact]
         public void LessThanEqual()
         {
             var date = new Date(2019, 11, 18);
@@ -137,7 +137,7 @@ namespace Booth.Common.Tests.DateTests
             };
         }
 
-        [TestCase]
+        [Fact]
         public void GreaterThanEqual()
         {
             var date = new Date(2019, 11, 18);

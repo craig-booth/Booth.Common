@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 using FluentAssertions.Execution;
 
 namespace Booth.Common.Tests.TimeTests
 {
-    class TimeTests
+    public class TimeTests
     {
-        [TestCase]
+        [Fact]
         public void Now()
         {
             var timeNow = Time.Now;
@@ -19,7 +19,7 @@ namespace Booth.Common.Tests.TimeTests
             timeNow.Should().BeEquivalentTo(new { Hour = dateTimeNow.Hour, Minute = dateTimeNow.Minute, Second = dateTimeNow.Second });           
         }
 
-        [TestCase]
+        [Fact]
         public void Second()
         {
             var time = new Time(14, 02, 24);
@@ -27,7 +27,7 @@ namespace Booth.Common.Tests.TimeTests
             time.Second.Should().Be(24);
         }
 
-        [TestCase]
+        [Fact]
         public void Minute()
         {
             var time = new Time(14, 02, 24);
@@ -35,7 +35,7 @@ namespace Booth.Common.Tests.TimeTests
             time.Minute.Should().Be(2);
         }
 
-        [TestCase]
+        [Fact]
         public void Hour()
         {
             var time = new Time(14, 02, 24);
@@ -43,7 +43,8 @@ namespace Booth.Common.Tests.TimeTests
             time.Hour.Should().Be(14);
         }
 
-        [TestCaseSource(nameof(AddTimeSpanData))] 
+        [Theory]
+        [MemberData(nameof(AddTimeSpanData))] 
         public void AddTimeSpan(TimeSpan timeSpanToAdd, Time expectedTime)
         {
             var time = new Time(14, 02, 24);
@@ -53,7 +54,7 @@ namespace Booth.Common.Tests.TimeTests
             newTime.Should().Be(expectedTime);
         }
 
-        private static IEnumerable<object[]> AddTimeSpanData()
+        public static IEnumerable<object[]> AddTimeSpanData()
         {
             yield return new object[] { new TimeSpan(0, 0, 0), new Time(14, 02, 24) };
             yield return new object[] { new TimeSpan(0, 0, 30), new Time(14, 02, 54) };
@@ -65,7 +66,7 @@ namespace Booth.Common.Tests.TimeTests
             yield return new object[] { new TimeSpan(0, -5, 7), new Time(13, 57, 31) };
         }
 
-        [TestCase]
+        [Fact]
         public void AddTimeSpanGreaterThanOneDay()
         {
             var time = new Time(14, 02, 24);
@@ -76,7 +77,7 @@ namespace Booth.Common.Tests.TimeTests
         }
 
 
-        [TestCase]
+        [Fact]
         public void AddTimeSpanLessThanOneDay()
         {
             var time = new Time(14, 02, 24);
@@ -86,7 +87,7 @@ namespace Booth.Common.Tests.TimeTests
             a.Should().ThrowExactly<OverflowException>();
         }
 
-        [TestCase]
+        [Fact]
         public void AddSeconds()
         {
             var time = new Time(14, 02, 24);
@@ -95,7 +96,7 @@ namespace Booth.Common.Tests.TimeTests
             newTime.Should().Be(new Time(14, 05, 14));
         }
 
-        [TestCase]
+        [Fact]
         public void AddMinutes()
         {
             var time = new Time(14, 02, 24);
@@ -104,7 +105,7 @@ namespace Booth.Common.Tests.TimeTests
             newTime.Should().Be(new Time(16, 03, 24));
         }
 
-        [TestCase]
+        [Fact]
         public void AddHours()
         {
             var time = new Time(14, 02, 24);
@@ -114,7 +115,7 @@ namespace Booth.Common.Tests.TimeTests
         }
 
 
-        [TestCase]
+        [Fact]
         public void SubtractTimeSpan()
         {
             var time = new Time(14, 02, 24);
@@ -123,7 +124,7 @@ namespace Booth.Common.Tests.TimeTests
             newTime.Should().Be(new Time(9, 59, 50));
         }
 
-        [TestCase]
+        [Fact]
         public void SubtractTime()
         {
             var time = new Time(14, 02, 24);
@@ -132,7 +133,7 @@ namespace Booth.Common.Tests.TimeTests
             ts.Should().Be(new TimeSpan(5, 40, 21));
         }
 
-        [TestCase]
+        [Fact]
         public void GetObjectData()
         {
             var time = new Time(14, 02, 24);
@@ -151,7 +152,7 @@ namespace Booth.Common.Tests.TimeTests
 
         }
 
-        [TestCase]
+        [Fact]
         public void CreateFromObjectData()
         {
             var converter = new FormatterConverter();

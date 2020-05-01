@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 using FluentAssertions.Execution;
 
 namespace Booth.Common.Tests.TimeTests
 {
-    class TimeOperatorTests
+    public class TimeOperatorTests
     {
 
-        [TestCase]
+        [Fact]
         public void AddTimeSpan()
         {
             var time = new Time(14, 02, 24);
@@ -20,7 +20,7 @@ namespace Booth.Common.Tests.TimeTests
             newTime.Should().Be(new Time(16, 06, 48));
         }
 
-        [TestCase]
+        [Fact]
         public void AddTimeSpanOverflow()
         {
             var time = new Time(14, 02, 24);
@@ -30,7 +30,7 @@ namespace Booth.Common.Tests.TimeTests
             a.Should().ThrowExactly<OverflowException>();
         }
 
-        [TestCase]
+        [Fact]
         public void SubtractTimeSpan()
         {
             var time = new Time(14, 02, 24);
@@ -40,7 +40,7 @@ namespace Booth.Common.Tests.TimeTests
             newTime.Should().Be(new Time(11, 58, 00));
         }
 
-        [TestCase]
+        [Fact]
         public void SubtractTimeSpanOverflow()
         {
             var time = new Time(14, 02, 24);
@@ -50,7 +50,7 @@ namespace Booth.Common.Tests.TimeTests
             a.Should().ThrowExactly<OverflowException>();
         }
 
-        [TestCase]
+        [Fact]
         public void SubtractTime()
         {
             var time = new Time(14, 02, 24);
@@ -60,7 +60,7 @@ namespace Booth.Common.Tests.TimeTests
             ts.Should().Be(new TimeSpan(5, 39, 50));
         }
 
-        [TestCase]
+        [Fact]
         public void Equal()
         {
             var time = new Time(14, 02, 24);
@@ -79,7 +79,7 @@ namespace Booth.Common.Tests.TimeTests
             };
         }
 
-        [TestCase]
+        [Fact]
         public void NotEqual()
         {
             var time = new Time(14, 02, 24);
@@ -98,7 +98,7 @@ namespace Booth.Common.Tests.TimeTests
             };
         }
 
-        [TestCase]
+        [Fact]
         public void LessThan()
         {
             var time = new Time(14, 02, 24);
@@ -117,7 +117,7 @@ namespace Booth.Common.Tests.TimeTests
             };
         }
 
-        [TestCase]
+        [Fact]
         public void GreaterThan()
         {
             var time = new Time(14, 02, 24);
@@ -136,7 +136,7 @@ namespace Booth.Common.Tests.TimeTests
             };
         }
 
-        [TestCase]
+        [Fact]
         public void LessThanEqual()
         {
             var time = new Time(14, 02, 24);
@@ -155,7 +155,7 @@ namespace Booth.Common.Tests.TimeTests
             };
         }
 
-        [TestCase]
+        [Fact]
         public void GreaterThanEqual()
         {
             var time = new Time(14, 02, 24);

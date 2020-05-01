@@ -1,15 +1,15 @@
 ﻿using System;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 
 using Booth.Common;
 
 namespace Booth.Common.Tests.DateRangeTests
 {
-    class OverlapsTests
+    public class OverlapsTests
     {
-        [TestCase]
+        [Fact]
         public void WhollyBefore()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -20,7 +20,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void BeforeWithEndDateMatchingStartDate()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -31,7 +31,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void PartiallyBefore()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -42,7 +42,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void WithinWithMatchingStartDate()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -53,7 +53,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void WhollyWithin()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -64,7 +64,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void WithinWithMatchingEndDate()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -75,7 +75,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void PartiallyAfter()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -86,7 +86,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void AfterWithStartDateMatchingEndDate()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -97,7 +97,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void WhollyAfter()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -108,7 +108,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void WhollyOverlaps()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -119,7 +119,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void Same()
         {
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));

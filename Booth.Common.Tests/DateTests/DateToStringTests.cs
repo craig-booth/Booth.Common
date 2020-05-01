@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 
 namespace Booth.Common.Tests.DateTests
 {
-    class DateToStringTests
+    public class DateToStringTests
     {
 
-        [TestCase]
+        [Fact]
         public void ToLongDateString()
         {
             var date = new Date(2019, 11, 19);
@@ -21,7 +21,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().Be(dateTime.ToLongDateString());
         }
 
-        [TestCase]
+        [Fact]
         public void ToShortDateString()
         {
             var date = new Date(2019, 11, 19);
@@ -32,7 +32,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().Be(dateTime.ToShortDateString());
         }
 
-        [TestCase]
+        [Fact]
         public void ToStringProviderFormat()
         {      
             var date = new Date(2019, 11, 19);
@@ -45,7 +45,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().Be(dateTime.ToString(format, provider));
         }
 
-        [TestCase]
+        [Fact]
         public void ToStringFormat()
         {
             var date = new Date(2019, 11, 19);
@@ -57,7 +57,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().Be(dateTime.Date.ToString(format));
         }
 
-        [TestCase]
+        [Fact]
         public void ToStringProvider()
         {
             var date = new Date(2019, 11, 19);
@@ -69,7 +69,7 @@ namespace Booth.Common.Tests.DateTests
             result.Should().Be(dateTime.Date.ToString(provider));
         }
 
-        [TestCase]
+        [Fact]
         public void DateToString()
         {
             var date = new Date(2019, 11, 19);

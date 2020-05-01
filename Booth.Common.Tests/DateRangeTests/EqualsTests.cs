@@ -1,13 +1,13 @@
 ﻿using System;
 
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 
 namespace Booth.Common.Tests.DateRangeTests
 {
-    class EqualsTests
+    public class EqualsTests
     {
-        [TestCase]
+        [Fact]
         public void IsEqual()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -18,7 +18,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void IsNotEqual()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
@@ -29,7 +29,7 @@ namespace Booth.Common.Tests.DateRangeTests
             result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void IsDifferentObjectType()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
