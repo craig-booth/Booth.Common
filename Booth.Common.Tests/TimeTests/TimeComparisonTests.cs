@@ -1,70 +1,170 @@
 ﻿using System;
+
 using NUnit.Framework;
+using FluentAssertions;
 
 namespace Booth.Common.Tests.TimeTests
 {
     class TimeComparisonTests
     {
         [TestCase]
-        public void CompareTest()
+        public void CompareTime1LessThanTime2()
         {
-            Assert.Multiple(() =>
-            {
-                Assert.That(Time.Compare(new Time(14, 02, 24), new Time(11, 02, 06)), Is.EqualTo(1));
-                Assert.That(Time.Compare(new Time(14, 02, 24), new Time(14, 02, 24)), Is.EqualTo(0));
-                Assert.That(Time.Compare(new Time(14, 02, 24), new Time(14, 45, 22)), Is.EqualTo(-1));
-            });
+            var result = Time.Compare(new Time(14, 02, 24), new Time(11, 02, 06));
+
+            result.Should().BePositive();
         }
 
         [TestCase]
-        public void CompareToTest()
+        public void CompareTime1EqualToTime2()
         {
-            Assert.Multiple(() =>
-            {
-                Assert.That(new Time(14, 02, 24).CompareTo(new Time(11, 02, 06)), Is.EqualTo(1));
-                Assert.That(new Time(14, 02, 24).CompareTo(new Time(14, 02, 24)), Is.EqualTo(0));
-                Assert.That(new Time(14, 02, 24).CompareTo(new Time(14, 45, 22)), Is.EqualTo(-1));
-            });
+            var result = Time.Compare(new Time(14, 02, 24), new Time(14, 02, 24));
+
+            result.Should().Be(0);
         }
 
         [TestCase]
-        public void CompareToObjectTest()
+        public void CompareTime1GreaterThanTime2()
         {
-            Assert.Multiple(() =>
-            {
-                Assert.That(new Time(14, 02, 24).CompareTo(null), Is.EqualTo(1));
-                Assert.That(new Time(14, 02, 24).CompareTo(new Time(14, 02, 24)), Is.EqualTo(0));
-                Assert.That(new Time(14, 02, 24).CompareTo(new TimeSpan(14, 02, 24)), Is.EqualTo(0));
-                Assert.That(() => new Time(14, 02, 24).CompareTo(5), Throws.ArgumentException);
-            });
+            var result = Time.Compare(new Time(14, 02, 24), new Time(14, 45, 22));
+
+            result.Should().BeNegative();
         }
 
         [TestCase]
-        public void EqualsTest()
+        public void CompareToTimeLessThanThisTime()
         {
-            Assert.Multiple(() =>
-            {
-                Assert.That(new Time(14, 02, 24).Equals(new Time(11, 02, 06)), Is.False);
-                Assert.That(new Time(14, 02, 24).Equals(new Time(14, 02, 24)), Is.True);
-                Assert.That(new Time(14, 02, 24).Equals(new Time(14, 45, 22)), Is.False);
-            });
+            var time = new Time(14, 02, 24);
+
+            var result = time.CompareTo(new Time(11, 02, 06));
+
+            result.Should().BePositive();
         }
 
         [TestCase]
-        public void StaticEqualsObjectTest()
+        public void CompareToTimeEqualToThisTime()
         {
-            Assert.Multiple(() =>
-            {
-                Assert.That(Time.Equals(new Time(14, 02, 24), new Time(11, 02, 06)), Is.False);
-                Assert.That(Time.Equals(new Time(14, 02, 24), new Time(14, 02, 24)), Is.True);
-                Assert.That(Time.Equals(new Time(14, 02, 24), new Time(14, 45, 22)), Is.False);
-            });
+            var time = new Time(14, 02, 24);
+
+            var result = time.CompareTo(new Time(14, 02, 24));
+
+            result.Should().Be(0);
         }
 
         [TestCase]
-        public void GetHashCodeTest()
+        public void CompareToTimeGreaterThanThisTime()
         {
-            Assert.That(new Time(14, 02, 24).GetHashCode(), Is.Not.EqualTo(0));
+            var time = new Time(14, 02, 24);
+
+            var result = time.CompareTo(new Time(14, 45, 22));
+
+            result.Should().BeNegative();
+        }
+
+
+        [TestCase]
+        public void CompareToNullObject()
+        {
+            var time = new Time(14, 02, 24);
+
+            var result = time.CompareTo(null);
+
+            result.Should().BePositive();
+        }
+
+        [TestCase]
+        public void CompareToInteger()
+        {
+            var time = new Time(14, 02, 24);
+
+            Action a = () => time.CompareTo(5);
+
+            a.Should().ThrowExactly<ArgumentException>();
+        }
+
+        [TestCase]
+        public void CompareToTimeSpanObject()
+        {
+            var time = new Time(14, 02, 24);
+
+            var result = time.CompareTo(new TimeSpan(14, 02, 24));
+
+            result.Should().Be(0);
+        }
+
+
+        [TestCase]
+        public void EqualsTimeLessThanThisTime()
+        {
+            var time = new Time(14, 02, 24);
+
+            var result = time.Equals(new Time(11, 02, 06));
+
+            result.Should().BeFalse();
+        }
+
+        [TestCase]
+        public void EqualsTimeEqualToThisTime()
+        {
+            var time = new Time(14, 02, 24);
+
+            var result = time.Equals(new Time(14, 02, 24));
+
+            result.Should().BeTrue();
+        }
+
+        [TestCase]
+        public void EqualsTimeGreaterThanThisTime()
+        {
+            var time = new Time(14, 02, 24);
+
+            var result = time.Equals(new Time(14, 45, 22));
+
+            result.Should().BeFalse();
+        }
+
+        [TestCase]
+        public void EqualsObjectString()
+        {
+            var time = new Time(14, 02, 24);
+
+            Action a = () => time.Equals("Hello");
+
+            a.Should().ThrowExactly<ArgumentException>();
+        }
+
+        [TestCase]
+        public void StaticEqualsTime1LessThanTime2()
+        {
+            var result = Time.Equals(new Time(14, 02, 24), new Time(11, 02, 06));
+
+            result.Should().BeFalse();
+        }
+
+        [TestCase]
+        public void StaticEqualsTime1EqualToTime2()
+        {
+            var result = Time.Equals(new Time(14, 02, 24), new Time(14, 02, 24));
+
+            result.Should().BeTrue();
+        }
+
+        [TestCase]
+        public void StaticEqualsTime1GreaterThanTime2()
+        {
+            var result = Time.Equals(new Time(14, 02, 24), new Time(14, 45, 22));
+
+            result.Should().BeFalse();
+        }
+
+        [TestCase]
+        public void TimeGetHashCode()
+        {
+            var time = new Time(14, 02, 24);
+            
+            var hashCode= time.GetHashCode();
+
+            hashCode.Should().Be(50544);
         }
     }
 }

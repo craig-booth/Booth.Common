@@ -2,15 +2,16 @@
 using System.Collections;
 
 using NUnit.Framework;
+using FluentAssertions;
 
 namespace Booth.Common.Tests.DateUtilsTests
 {
     class ComparisonTests
     {
         [TestCaseSource(typeof(ComparisonTestsTestData), nameof(ComparisonTestsTestData.WeekDayData))]
-        public bool WeekDayTests(Date date)
+        public void WeekDayTests(Date date, bool expected)
         {
-            return date.WeekDay();
+            date.WeekDay().Should().Be(expected);
         }
 
         [TestCase]
@@ -19,7 +20,9 @@ namespace Booth.Common.Tests.DateUtilsTests
             var date1 = new Date(2000, 01, 01);
             var date2 = new Date(2002, 01, 01);
 
-            Assert.That(DateUtils.Earlist(date1, date2), Is.EqualTo(date1));
+            var earliest = DateUtils.Earlist(date1, date2);
+
+            earliest.Should().Be(date1);
         }
 
         [TestCase]
@@ -28,7 +31,9 @@ namespace Booth.Common.Tests.DateUtilsTests
             var date1 = new Date(2000, 01, 01);
             var date2 = new Date(1999, 01, 01);
 
-            Assert.That(DateUtils.Earlist(date1, date2), Is.EqualTo(date2));
+            var earliest = DateUtils.Earlist(date1, date2);
+
+            earliest.Should().Be(date2);
         }
 
         [TestCase]
@@ -37,7 +42,9 @@ namespace Booth.Common.Tests.DateUtilsTests
             var date1 = new Date(2000, 01, 01);
             var date2 = new Date(2000, 01, 01);
 
-            Assert.That(DateUtils.Earlist(date1, date2), Is.EqualTo(date1));
+            var earliest = DateUtils.Earlist(date1, date2);
+
+            earliest.Should().Be(date1);
         }
 
         [TestCase]
@@ -46,7 +53,9 @@ namespace Booth.Common.Tests.DateUtilsTests
             var date1 = new Date(2000, 01, 01);
             var date2 = new Date(2002, 01, 01);
 
-            Assert.That(DateUtils.Latest(date1, date2), Is.EqualTo(date2));
+            var latest = DateUtils.Latest(date1, date2);
+
+            latest.Should().Be(date2);
         }
 
         [TestCase]
@@ -55,7 +64,9 @@ namespace Booth.Common.Tests.DateUtilsTests
             var date1 = new Date(2000, 01, 01);
             var date2 = new Date(1999, 01, 01);
 
-            Assert.That(DateUtils.Latest(date1, date2), Is.EqualTo(date1));
+            var latest = DateUtils.Latest(date1, date2);
+
+            latest.Should().Be(date1);
         }
 
 
@@ -65,20 +76,22 @@ namespace Booth.Common.Tests.DateUtilsTests
             var date1 = new Date(2000, 01, 01);
             var date2 = new Date(2000, 01, 01);
 
-            Assert.That(DateUtils.Latest(date1, date2), Is.EqualTo(date1));
+            var latest = DateUtils.Latest(date1, date2);
+
+            latest.Should().Be(date1);
         }
 
 
         [TestCaseSource(typeof(ComparisonTestsTestData), nameof(ComparisonTestsTestData.EndOfWeekData))]
-        public Date TestEndOfWeek(Date date)
+        public void TestEndOfWeek(Date date, Date expected)
         {
-            return date.EndOfWeek();
+            date.EndOfWeek().Should().Be(expected);
         }
 
         [TestCaseSource(typeof(ComparisonTestsTestData), nameof(ComparisonTestsTestData.EndOfMonthData))]
-        public static Date EndOfMonth(Date date)
+        public void EndOfMonth(Date date, Date expected)
         {
-            return date.EndOfMonth();
+            date.EndOfMonth().Should().Be(expected);
         } 
     }
 
@@ -88,13 +101,13 @@ namespace Booth.Common.Tests.DateUtilsTests
         {
             get
             {
-                yield return new TestCaseData(new Date(2019, 10, 07)).Returns(true).SetArgDisplayNames("Monday");
-                yield return new TestCaseData(new Date(2019, 10, 08)).Returns(true).SetArgDisplayNames("Tuesday");
-                yield return new TestCaseData(new Date(2019, 10, 09)).Returns(true).SetArgDisplayNames("Wednesday");
-                yield return new TestCaseData(new Date(2019, 10, 10)).Returns(true).SetArgDisplayNames("Thursday");
-                yield return new TestCaseData(new Date(2019, 10, 11)).Returns(true).SetArgDisplayNames("Friday");
-                yield return new TestCaseData(new Date(2019, 10, 12)).Returns(false).SetArgDisplayNames("Saturday");
-                yield return new TestCaseData(new Date(2019, 10, 13)).Returns(false).SetArgDisplayNames("Sunday");
+                yield return new TestCaseData(new Date(2019, 10, 07), true).SetArgDisplayNames("Monday");
+                yield return new TestCaseData(new Date(2019, 10, 08), true).SetArgDisplayNames("Tuesday");
+                yield return new TestCaseData(new Date(2019, 10, 09), true).SetArgDisplayNames("Wednesday");
+                yield return new TestCaseData(new Date(2019, 10, 10), true).SetArgDisplayNames("Thursday");
+                yield return new TestCaseData(new Date(2019, 10, 11), true).SetArgDisplayNames("Friday");
+                yield return new TestCaseData(new Date(2019, 10, 12), false).SetArgDisplayNames("Saturday");
+                yield return new TestCaseData(new Date(2019, 10, 13), false).SetArgDisplayNames("Sunday");
             }
         }
 
@@ -102,13 +115,13 @@ namespace Booth.Common.Tests.DateUtilsTests
         {
             get
             {
-                yield return new TestCaseData(new Date(2019, 10, 07)).Returns(new Date(2019, 10, 13)).SetArgDisplayNames("Monday");
-                yield return new TestCaseData(new Date(2019, 10, 08)).Returns(new Date(2019, 10, 13)).SetArgDisplayNames("Tuesday");
-                yield return new TestCaseData(new Date(2019, 10, 09)).Returns(new Date(2019, 10, 13)).SetArgDisplayNames("Wednesday");
-                yield return new TestCaseData(new Date(2019, 10, 10)).Returns(new Date(2019, 10, 13)).SetArgDisplayNames("Thursday");
-                yield return new TestCaseData(new Date(2019, 10, 11)).Returns(new Date(2019, 10, 13)).SetArgDisplayNames("Friday");
-                yield return new TestCaseData(new Date(2019, 10, 12)).Returns(new Date(2019, 10, 13)).SetArgDisplayNames("Saturday");
-                yield return new TestCaseData(new Date(2019, 10, 13)).Returns(new Date(2019, 10, 13)).SetArgDisplayNames("Sunday");
+                yield return new TestCaseData(new Date(2019, 10, 07), new Date(2019, 10, 13)).SetArgDisplayNames("Monday");
+                yield return new TestCaseData(new Date(2019, 10, 08), new Date(2019, 10, 13)).SetArgDisplayNames("Tuesday");
+                yield return new TestCaseData(new Date(2019, 10, 09), new Date(2019, 10, 13)).SetArgDisplayNames("Wednesday");
+                yield return new TestCaseData(new Date(2019, 10, 10), new Date(2019, 10, 13)).SetArgDisplayNames("Thursday");
+                yield return new TestCaseData(new Date(2019, 10, 11), new Date(2019, 10, 13)).SetArgDisplayNames("Friday");
+                yield return new TestCaseData(new Date(2019, 10, 12), new Date(2019, 10, 13)).SetArgDisplayNames("Saturday");
+                yield return new TestCaseData(new Date(2019, 10, 13), new Date(2019, 10, 13)).SetArgDisplayNames("Sunday");
             }
         }
 
@@ -116,13 +129,13 @@ namespace Booth.Common.Tests.DateUtilsTests
         {
             get
             {
-                yield return new TestCaseData(new Date(2000, 01, 01)).Returns(new Date(2000, 01, 31)).SetArgDisplayNames("Jan1");
-                yield return new TestCaseData(new Date(2000, 01, 31)).Returns(new Date(2000, 01, 31)).SetArgDisplayNames("Jan31");
-                yield return new TestCaseData(new Date(2000, 02, 01)).Returns(new Date(2000, 02, 29)).SetArgDisplayNames("Feb1LeapYear");
-                yield return new TestCaseData(new Date(2000, 02, 28)).Returns(new Date(2000, 02, 29)).SetArgDisplayNames("Feb28LeapYear");
-                yield return new TestCaseData(new Date(2000, 02, 29)).Returns(new Date(2000, 02, 29)).SetArgDisplayNames("Feb29LeapYear");
-                yield return new TestCaseData(new Date(2001, 02, 01)).Returns(new Date(2001, 02, 28)).SetArgDisplayNames("Feb1");
-                yield return new TestCaseData(new Date(2000, 10, 13)).Returns(new Date(2000, 10, 31)).SetArgDisplayNames("Oct13");
+                yield return new TestCaseData(new Date(2000, 01, 01), new Date(2000, 01, 31)).SetArgDisplayNames("Jan1");
+                yield return new TestCaseData(new Date(2000, 01, 31), new Date(2000, 01, 31)).SetArgDisplayNames("Jan31");
+                yield return new TestCaseData(new Date(2000, 02, 01), new Date(2000, 02, 29)).SetArgDisplayNames("Feb1LeapYear");
+                yield return new TestCaseData(new Date(2000, 02, 28), new Date(2000, 02, 29)).SetArgDisplayNames("Feb28LeapYear");
+                yield return new TestCaseData(new Date(2000, 02, 29), new Date(2000, 02, 29)).SetArgDisplayNames("Feb29LeapYear");
+                yield return new TestCaseData(new Date(2001, 02, 01), new Date(2001, 02, 28)).SetArgDisplayNames("Feb1");
+                yield return new TestCaseData(new Date(2000, 10, 13), new Date(2000, 10, 31)).SetArgDisplayNames("Oct13");
             }
         }
     } 

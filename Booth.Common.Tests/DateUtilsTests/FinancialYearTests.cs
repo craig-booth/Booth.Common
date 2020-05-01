@@ -1,5 +1,7 @@
 ﻿using System;
+
 using NUnit.Framework;
+using FluentAssertions;
 
 namespace Booth.Common.Tests.DateUtilsTests
 {
@@ -10,7 +12,7 @@ namespace Booth.Common.Tests.DateUtilsTests
         {
             var date = new Date(2000, 04, 01);
 
-            Assert.That(date.FinancialYear(), Is.EqualTo(2000));
+            date.FinancialYear().Should().Be(2000);
         }
 
         [TestCase]
@@ -18,7 +20,7 @@ namespace Booth.Common.Tests.DateUtilsTests
         {
             var date = new Date(2000, 06, 30);
 
-            Assert.That(date.FinancialYear(), Is.EqualTo(2000));
+            date.FinancialYear().Should().Be(2000);
         }
 
         [TestCase]
@@ -26,7 +28,7 @@ namespace Booth.Common.Tests.DateUtilsTests
         {
             var date = new Date(2000, 09, 01);
 
-            Assert.That(date.FinancialYear(), Is.EqualTo(2001));
+            date.FinancialYear().Should().Be(2001);
         }
 
         [TestCase]
@@ -34,7 +36,7 @@ namespace Booth.Common.Tests.DateUtilsTests
         {
             var dateRange = new DateRange(new Date(1999, 07, 01), new Date(2000, 06, 30));
 
-            Assert.That(DateUtils.FinancialYear(2000), Is.EqualTo(dateRange));
+            DateUtils.FinancialYear(2000).Should().Be(dateRange);
         }
 
         [TestCase]
@@ -42,7 +44,7 @@ namespace Booth.Common.Tests.DateUtilsTests
         {
             var date = new Date(1999, 07, 01);
 
-            Assert.That(DateUtils.StartOfFinancialYear(2000), Is.EqualTo(date));
+            DateUtils.StartOfFinancialYear(2000).Should().Be(date);
         }
 
         [TestCase]
@@ -50,7 +52,7 @@ namespace Booth.Common.Tests.DateUtilsTests
         {
             var date = new Date(2000, 06, 30);
 
-            Assert.That(DateUtils.EndOfFinancialYear(2000), Is.EqualTo(date));
+            DateUtils.EndOfFinancialYear(2000).Should().Be(date);
         }
     }
 }

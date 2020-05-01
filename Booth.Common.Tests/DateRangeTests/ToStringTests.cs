@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading;
+
 using NUnit.Framework;
+using FluentAssertions;
 
 namespace Booth.Common.Tests.DateRangeTests
 {
@@ -17,8 +19,9 @@ namespace Booth.Common.Tests.DateRangeTests
             Thread.CurrentThread.CurrentCulture = testCulture;
 
             var dateRange = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
+            var result = dateRange.ToString();
 
-            Assert.That(dateRange.ToString(), Is.EqualTo("1/01/2000 - 31/01/2000"));
+            result.Should().Be("1/01/2000 - 31/01/2000");
 
             Thread.CurrentThread.CurrentCulture = savedCulture;
         }

@@ -1,117 +1,139 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+
 using NUnit.Framework;
+using FluentAssertions;
+using FluentAssertions.Execution;
 
 namespace Booth.Common.Tests.TimeTests
 {
     class TimeTests
     {
         [TestCase]
-        public void NowTest()
+        public void Now()
         {
             var timeNow = Time.Now;
             var dateTimeNow = DateTime.Now;
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(timeNow.Hour, Is.EqualTo(dateTimeNow.Hour));
-                Assert.That(timeNow.Minute, Is.EqualTo(dateTimeNow.Minute));
-                Assert.That(timeNow.Second, Is.EqualTo(dateTimeNow.Second));
-            });
+            timeNow.Should().BeEquivalentTo(new { Hour = dateTimeNow.Hour, Minute = dateTimeNow.Minute, Second = dateTimeNow.Second });           
+        }
+
+        [TestCase]
+        public void Second()
+        {
+            var time = new Time(14, 02, 24);
+
+            time.Second.Should().Be(24);
+        }
+
+        [TestCase]
+        public void Minute()
+        {
+            var time = new Time(14, 02, 24);
             
+            time.Minute.Should().Be(2);
         }
 
         [TestCase]
-        public void SecondTest()
+        public void Hour()
         {
             var time = new Time(14, 02, 24);
-            Assert.That(time.Second, Is.EqualTo(24));
+            
+            time.Hour.Should().Be(14);
         }
 
-        [TestCase]
-        public void MinuteTest()
-        {
-            var time = new Time(14, 02, 24);
-            Assert.That(time.Minute, Is.EqualTo(2));
-        }
-
-        [TestCase]
-        public void HourTest()
-        {
-            var time = new Time(14, 02, 24);
-            Assert.That(time.Hour, Is.EqualTo(14));
-        }
-
-        [TestCase]
-        public void AddTimeSpanTest()
+        [TestCaseSource(nameof(AddTimeSpanData))] 
+        public void AddTimeSpan(TimeSpan timeSpanToAdd, Time expectedTime)
         {
             var time = new Time(14, 02, 24);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(time.Add(new TimeSpan(0, 0, 0)), Is.EqualTo(time));
-                Assert.That(() => time.Add(new TimeSpan(1, 0, 0, 0)), Throws.TypeOf(typeof(OverflowException)));
-                Assert.That(time.Add(new TimeSpan(0, 0, 30)), Is.EqualTo(new Time(14, 02, 54)));
-                Assert.That(time.Add(new TimeSpan(0, 0, 120)), Is.EqualTo(new Time(14, 04, 24)));
-                Assert.That(time.Add(new TimeSpan(0, 24, 0)), Is.EqualTo(new Time(14, 26, 24)));
-                Assert.That(time.Add(new TimeSpan(0, 64, 0)), Is.EqualTo(new Time(15, 06, 24)));
-                Assert.That(time.Add(new TimeSpan(2, 0, 0)), Is.EqualTo(new Time(16, 02, 24)));
-                Assert.That(() => time.Add(new TimeSpan(10, 0, 0)), Throws.TypeOf(typeof(OverflowException)));
-                Assert.That(time.Add(new TimeSpan(-1, -1, -1)), Is.EqualTo(new Time(13, 01, 23)));
-                Assert.That(time.Add(new TimeSpan(0, -5, 7)), Is.EqualTo(new Time(13, 57, 31)));
-                Assert.That(() => time.Add(new TimeSpan(-1, 0, 0, 0)), Throws.TypeOf(typeof(OverflowException)));
-            });
+            var newTime = time.Add(timeSpanToAdd);
+
+            newTime.Should().Be(expectedTime);
+        }
+
+        private static IEnumerable<object[]> AddTimeSpanData()
+        {
+            yield return new object[] { new TimeSpan(0, 0, 0), new Time(14, 02, 24) };
+            yield return new object[] { new TimeSpan(0, 0, 30), new Time(14, 02, 54) };
+            yield return new object[] { new TimeSpan(0, 0, 120), new Time(14, 04, 24) };
+            yield return new object[] { new TimeSpan(0, 24, 0), new Time(14, 26, 24) };
+            yield return new object[] { new TimeSpan(0, 64, 0), new Time(15, 06, 24) };
+            yield return new object[] { new TimeSpan(2, 0, 0), new Time(16, 02, 24) };
+            yield return new object[] { new TimeSpan(-1, -1, -1), new Time(13, 01, 23) };
+            yield return new object[] { new TimeSpan(0, -5, 7), new Time(13, 57, 31) };
         }
 
         [TestCase]
-        public void AddSecondsTest()
+        public void AddTimeSpanGreaterThanOneDay()
+        {
+            var time = new Time(14, 02, 24);
+
+            Action a = () => { var newTime = time.Add(new TimeSpan(10, 0, 0)); };
+
+            a.Should().ThrowExactly<OverflowException>();
+        }
+
+
+        [TestCase]
+        public void AddTimeSpanLessThanOneDay()
+        {
+            var time = new Time(14, 02, 24);
+
+            Action a = () => { var newTime = time.Add(new TimeSpan(-15, 0, 0)); };
+
+            a.Should().ThrowExactly<OverflowException>();
+        }
+
+        [TestCase]
+        public void AddSeconds()
         {
             var time = new Time(14, 02, 24);
             var newTime = time.AddSeconds(170);
 
-            Assert.That(newTime, Is.EqualTo(new Time(14, 05, 14)));
+            newTime.Should().Be(new Time(14, 05, 14));
         }
 
         [TestCase]
-        public void AddMinutesTest()
+        public void AddMinutes()
         {
             var time = new Time(14, 02, 24);
             var newTime = time.AddMinutes(121);
 
-            Assert.That(newTime, Is.EqualTo(new Time(16, 03, 24)));
+            newTime.Should().Be(new Time(16, 03, 24));
         }
 
         [TestCase]
-        public void AddHoursTest()
+        public void AddHours()
         {
             var time = new Time(14, 02, 24);
             var newTime = time.AddHours(5);
 
-            Assert.That(newTime, Is.EqualTo(new Time(19, 02, 24)));
+            newTime.Should().Be(new Time(19, 02, 24));
         }
 
 
         [TestCase]
-        public void SubtractTimeSpanTest()
+        public void SubtractTimeSpan()
         {
             var time = new Time(14, 02, 24);
             var newTime = time.Subtract(new TimeSpan(4, 2, 34));
 
-            Assert.That(newTime, Is.EqualTo(new Time(9, 59, 50)));
+            newTime.Should().Be(new Time(9, 59, 50));
         }
 
         [TestCase]
-        public void SubtractTimeTest()
+        public void SubtractTime()
         {
             var time = new Time(14, 02, 24);
             var ts = time.Subtract(new Time(08, 22, 03));
 
-            Assert.That(ts, Is.EqualTo(new TimeSpan(5, 40, 21)));
+            ts.Should().Be(new TimeSpan(5, 40, 21));
         }
 
         [TestCase]
-        public void GetObjectDataTest()
+        public void GetObjectData()
         {
             var time = new Time(14, 02, 24);
 
@@ -120,15 +142,28 @@ namespace Booth.Common.Tests.TimeTests
             var context = new StreamingContext();
             time.GetObjectData(info, context);
 
-            Assert.Multiple(() =>
+            using (new AssertionScope())
             {
-                Assert.That(info.GetValue("Second", typeof(int)), Is.EqualTo(24));
-                Assert.That(info.GetValue("Minute", typeof(int)), Is.EqualTo(02));
-                Assert.That(info.GetValue("Hour", typeof(int)), Is.EqualTo(14));
+                info.GetValue("Second", typeof(int)).Should().Be(24);
+                info.GetValue("Minute", typeof(int)).Should().Be(02);
+                info.GetValue("Hour", typeof(int)).Should().Be(14);
+            };
 
-                Assert.That(new Time(info, context), Is.EqualTo(time));
-            });
+        }
 
+        [TestCase]
+        public void CreateFromObjectData()
+        {
+            var converter = new FormatterConverter();
+            var info = new SerializationInfo(typeof(Date), converter);
+            var context = new StreamingContext();
+
+            info.AddValue("Second", 24);
+            info.AddValue("Minute", 02);
+            info.AddValue("Hour", 14);
+            var time = new Time(info, context);
+
+            time.Should().Be(new Time(14, 02, 24));
         }
 
     }

@@ -1,5 +1,7 @@
 ﻿using System;
+
 using NUnit.Framework;
+using FluentAssertions;
 
 using Booth.Common;
 
@@ -13,7 +15,9 @@ namespace Booth.Common.Tests.DateRangeTests
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-            Assert.That(dateRange1 == dateRange2, Is.True);
+            var result = dateRange1 == dateRange2;
+
+            result.Should().BeTrue();
         }
 
         [TestCase]
@@ -22,7 +26,9 @@ namespace Booth.Common.Tests.DateRangeTests
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 01), new Date(2002, 01, 31));
 
-            Assert.That(dateRange1 == dateRange2, Is.Not.True);
+            var result = dateRange1 == dateRange2;
+
+            result.Should().BeFalse();
         }
 
         [TestCase]
@@ -31,7 +37,9 @@ namespace Booth.Common.Tests.DateRangeTests
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 03), new Date(2000, 01, 31));
 
-            Assert.That(dateRange1 == dateRange2, Is.Not.True);
+            var result = dateRange1 == dateRange2;
+
+            result.Should().BeFalse();
         }
 
         [TestCase]
@@ -40,7 +48,9 @@ namespace Booth.Common.Tests.DateRangeTests
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2002, 01, 03), new Date(2002, 01, 31));
 
-            Assert.That(dateRange1 == dateRange2, Is.Not.True);
+            var result = dateRange1 == dateRange2;
+
+            result.Should().BeFalse();
         }
 
         [TestCase]
@@ -49,7 +59,9 @@ namespace Booth.Common.Tests.DateRangeTests
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-            Assert.That(dateRange1 != dateRange2, Is.Not.True);
+            var result = dateRange1 != dateRange2;
+
+            result.Should().BeFalse();
         }
 
         [TestCase]
@@ -58,7 +70,9 @@ namespace Booth.Common.Tests.DateRangeTests
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 01), new Date(2002, 01, 31));
 
-            Assert.That(dateRange1 != dateRange2, Is.True);
+            var result = dateRange1 != dateRange2;
+
+            result.Should().BeTrue();
         }
 
         [TestCase]
@@ -67,7 +81,9 @@ namespace Booth.Common.Tests.DateRangeTests
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 03), new Date(2000, 01, 31));
 
-            Assert.That(dateRange1 != dateRange2, Is.True);
+            var result = dateRange1 != dateRange2;
+
+            result.Should().BeTrue();
         }
 
         [TestCase]
@@ -76,7 +92,9 @@ namespace Booth.Common.Tests.DateRangeTests
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2002, 01, 03), new Date(2002, 01, 31));
 
-            Assert.That(dateRange1 != dateRange2, Is.True);
+            var result = dateRange1 != dateRange2;
+
+            result.Should().BeTrue();
         }
     }
 }

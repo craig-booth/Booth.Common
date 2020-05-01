@@ -4,6 +4,8 @@ using System.Globalization;
 using System.Text;
 
 using NUnit.Framework;
+using FluentAssertions;
+using FluentAssertions.Execution;
 
 namespace Booth.Common.Tests.TimeTests
 {
@@ -14,7 +16,9 @@ namespace Booth.Common.Tests.TimeTests
         [TestCase("06:24")]
         public void ParseTest(string s)
         {
-            Assert.That(Time.Parse(s), Is.EqualTo(new Time(06, 24, 00)));
+            var time = Time.Parse(s);
+
+            time.Should().Be(new Time(06, 24, 00));
         }
 
         [TestCase("6:24", @"h\:mm")]
@@ -22,7 +26,9 @@ namespace Booth.Common.Tests.TimeTests
         [TestCase("06.24", @"hh\.mm")]
         public void ParseExactTest(string s, string format)
         {
-            Assert.That(Time.ParseExact(s, format, CultureInfo.CurrentCulture), Is.EqualTo(new Time(06, 24, 00)));
+            var time = Time.ParseExact(s, format, CultureInfo.CurrentCulture);
+
+            time.Should().Be(new Time(06, 24, 00));
         }
 
         [TestCase("6:24", true)]
@@ -30,12 +36,16 @@ namespace Booth.Common.Tests.TimeTests
         [TestCase("06.24", false)]
         [TestCase("06.99", false)]
         [TestCase("ddd", false)]
-        public void TryParseTest(string s, bool successful)
+        public void TryParseTest(string s, bool expectedResult)
         {
             var result = Time.TryParse(s, out var resultTime);
-            Assert.That(result, Is.EqualTo(successful));
-            if (successful)
-                Assert.That(resultTime, Is.EqualTo(new Time(06, 24, 00)));
+
+            using (new AssertionScope())
+            {
+                result.Should().Be(expectedResult);
+                if (result == true)
+                    resultTime.Should().Be(new Time(06, 24, 00));
+            }
         }
 
         [TestCase("6:24", @"h\:mm", true)]
@@ -43,12 +53,16 @@ namespace Booth.Common.Tests.TimeTests
         [TestCase("06.24", @"hh\.mm", true)]
         [TestCase("06.99", @"hh\.mm", false)]
         [TestCase("ddd", @"hh\.mm", false)]
-        public void TryParseExactTest(string s, string format, bool successful)
+        public void TryParseExactTest(string s, string format, bool expectedResult)
         {
             var result = Time.TryParseExact(s, format, CultureInfo.CurrentCulture, out var resultTime);
-            Assert.That(result, Is.EqualTo(successful));
-            if (successful)
-                Assert.That(resultTime, Is.EqualTo(new Time(06, 24, 00)));
+
+            using (new AssertionScope())
+            {
+                result.Should().Be(expectedResult);
+                if (result == true)
+                    resultTime.Should().Be(new Time(06, 24, 00));
+            }
         }
 
     }

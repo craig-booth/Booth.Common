@@ -1,23 +1,21 @@
 ﻿using System;
+
 using NUnit.Framework;
+using FluentAssertions;
 
 namespace Booth.Common.Tests.DateRangeTests
 {
     class GeneralTests
     {
         [TestCase]
-        public void CreateTest()
+        public void Create()
         {
             var fromDate = new Date(2000, 01, 01);
             var toDate = new Date(2000, 01, 31);
 
             var dateRange = new DateRange(fromDate, toDate);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(dateRange.FromDate, Is.EqualTo(fromDate));
-                Assert.That(dateRange.ToDate, Is.EqualTo(toDate));
-            });
+            dateRange.Should().BeEquivalentTo(new { FromDate = fromDate, ToDate = toDate });
         }
 
         [TestCase]
@@ -26,7 +24,9 @@ namespace Booth.Common.Tests.DateRangeTests
             var fromDate = new Date(2000, 01, 01);
             var toDate = new Date(2000, 01, 31);
 
-            Assert.That(() => new DateRange(toDate, fromDate), Throws.ArgumentException);
+            Action a = () => new DateRange(toDate, fromDate);
+
+            a.Should().ThrowExactly<ArgumentException>();
         }
 
     }
