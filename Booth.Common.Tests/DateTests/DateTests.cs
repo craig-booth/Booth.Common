@@ -24,7 +24,7 @@ namespace Booth.Common.Tests.DateTests
         {
             var date = new Date(2019, 11, 04);
 
-            date.Day.Should().Be(4);
+            date.Day.Should().Be(5);
         }
 
         [Fact]
