@@ -1,82 +1,100 @@
 ﻿using System;
-using NUnit.Framework;
+
+using Xunit;
+using FluentAssertions;
 
 using Booth.Common;
 
 namespace Booth.Common.Tests.DateRangeTests
 {
-    class OperatorTests
+    public class OperatorTests
     {
-        [TestCase]
+        [Fact]
         public void EqualOperatorBothDatesTheSame()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-            Assert.That(dateRange1 == dateRange2, Is.True);
+            var result = dateRange1 == dateRange2;
+
+            result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualOperatorOnlyStartDateTheSame()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 01), new Date(2002, 01, 31));
 
-            Assert.That(dateRange1 == dateRange2, Is.Not.True);
+            var result = dateRange1 == dateRange2;
+
+            result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualOperatorOnlyEndDateTheSame()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 03), new Date(2000, 01, 31));
 
-            Assert.That(dateRange1 == dateRange2, Is.Not.True);
+            var result = dateRange1 == dateRange2;
+
+            result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void EqualOperatorBothDateDifferent()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2002, 01, 03), new Date(2002, 01, 31));
 
-            Assert.That(dateRange1 == dateRange2, Is.Not.True);
+            var result = dateRange1 == dateRange2;
+
+            result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void NotEqualOperatorBothDatesTheSame()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
 
-            Assert.That(dateRange1 != dateRange2, Is.Not.True);
+            var result = dateRange1 != dateRange2;
+
+            result.Should().BeFalse();
         }
 
-        [TestCase]
+        [Fact]
         public void NotEqualOperatorOnlyStartDateTheSame()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 01), new Date(2002, 01, 31));
 
-            Assert.That(dateRange1 != dateRange2, Is.True);
+            var result = dateRange1 != dateRange2;
+
+            result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void NotEqualOperatorOnlyEndDateTheSame()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2000, 01, 03), new Date(2000, 01, 31));
 
-            Assert.That(dateRange1 != dateRange2, Is.True);
+            var result = dateRange1 != dateRange2;
+
+            result.Should().BeTrue();
         }
 
-        [TestCase]
+        [Fact]
         public void NotEqualOperatorBothDateDifferent()
         {
             var dateRange1 = new DateRange(new Date(2000, 01, 01), new Date(2000, 01, 31));
             var dateRange2 = new DateRange(new Date(2002, 01, 03), new Date(2002, 01, 31));
 
-            Assert.That(dateRange1 != dateRange2, Is.True);
+            var result = dateRange1 != dateRange2;
+
+            result.Should().BeTrue();
         }
     }
 }

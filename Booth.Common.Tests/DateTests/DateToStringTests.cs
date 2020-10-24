@@ -2,72 +2,82 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-using NUnit.Framework;
+using Xunit;
+using FluentAssertions;
 
 namespace Booth.Common.Tests.DateTests
 {
-    class DateToStringTests
+    public class DateToStringTests
     {
 
-        [TestCase]
-        public void ToLongDateStringTest()
+        [Fact]
+        public void ToLongDateString()
         {
             var date = new Date(2019, 11, 19);
             var dateTime = new DateTime(2019, 11, 19);
 
-            Assert.That(date.ToLongDateString(), Is.EqualTo(dateTime.ToLongDateString()));
+            var result = date.ToLongDateString();
+
+            result.Should().Be(dateTime.ToLongDateString());
         }
 
-        [TestCase]
-        public void ToShortDateStringTest()
+        [Fact]
+        public void ToShortDateString()
         {
             var date = new Date(2019, 11, 19);
             var dateTime = new DateTime(2019, 11, 19);
 
-            Assert.That(date.ToShortDateString(), Is.EqualTo(dateTime.ToShortDateString()));
+            var result = date.ToShortDateString();
+
+            result.Should().Be(dateTime.ToShortDateString());
         }
 
-        [TestCase]
-        public void ToStringProviderFormatTest()
-        {
+        [Fact]
+        public void ToStringProviderFormat()
+        {      
             var date = new Date(2019, 11, 19);
             var dateTime = new DateTime(2019, 11, 19);
-
             var format = "yyyy-MM-dd";
             var provider = CultureInfo.CurrentCulture;
 
-            Assert.That(date.ToString(format, provider), Is.EqualTo(dateTime.ToString(format, provider)));
+            var result = date.ToString(format, provider);
+
+            result.Should().Be(dateTime.ToString(format, provider));
         }
 
-        [TestCase]
-        public void ToStringFormatTest()
+        [Fact]
+        public void ToStringFormat()
         {
             var date = new Date(2019, 11, 19);
             var dateTime = new DateTime(2019, 11, 19);
-
             var format = "yyyy-MM-dd";
 
-            Assert.That(date.ToString(format), Is.EqualTo(dateTime.Date.ToString(format)));
+            var result = date.ToString(format);
+
+            result.Should().Be(dateTime.Date.ToString(format));
         }
 
-        [TestCase]
-        public void ToStringProviderTest()
+        [Fact]
+        public void ToStringProvider()
         {
             var date = new Date(2019, 11, 19);
             var dateTime = new DateTime(2019, 11, 19);
-
             var provider = CultureInfo.CurrentCulture;
 
-            Assert.That(date.ToString(provider), Is.EqualTo(dateTime.Date.ToString(provider)));
+            var result = date.ToString(provider);
+
+            result.Should().Be(dateTime.Date.ToString(provider));
         }
 
-        [TestCase]
-        public void ToStringTest()
+        [Fact]
+        public void DateToString()
         {
             var date = new Date(2019, 11, 19);
             var dateTime = new DateTime(2019, 11, 19);
 
-            Assert.That(date.ToString(), Is.EqualTo(dateTime.Date.ToShortDateString()));
+            var result = date.ToString();
+
+            result.Should().Be(dateTime.Date.ToString(dateTime.Date.ToShortDateString()));
         }
 
     }
