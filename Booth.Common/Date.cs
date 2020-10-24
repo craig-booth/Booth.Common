@@ -26,6 +26,7 @@ namespace Booth.Common
         }
 
         public static Date MinValue = new Date(0001, 01, 01);
+
         public static Date MaxValue = new Date(9999, 12, 31);
 
         public static Date Today 
